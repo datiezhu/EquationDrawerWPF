@@ -32,8 +32,16 @@ namespace EquationDrawerApplication
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             PreferencesWindow preferencesWindow = new PreferencesWindow();
+            preferencesWindow.eventHandler += eventHandler;
+            preferencesWindow.Owner = this;
             preferencesWindow.Show();
+            
 
+        }
+
+        void eventHandler(object sender, EventArgs args) {
+            Label label = myLabel;
+            label.Content = "you have clicked";
         }
     }
 }

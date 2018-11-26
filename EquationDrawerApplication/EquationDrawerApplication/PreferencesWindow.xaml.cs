@@ -20,9 +20,10 @@ namespace EquationDrawerApplication
     /// <summary>
     /// Interaction logic for PreferencesWindow.xaml
     /// </summary>
+    public delegate void OnButtonPressedEventHandler(object sender, EventArgs args);
     public partial class PreferencesWindow : Window
     {
-
+        public event OnButtonPressedEventHandler eventHandler;
         public PreferencesWindow()
         {
             InitializeComponent();
@@ -30,6 +31,11 @@ namespace EquationDrawerApplication
 
         private void PreferenceButton_Click(object sender, RoutedEventArgs e)
         {
+            onEventHandler(null);
+        }
+
+        protected virtual void onEventHandler(EventArgs args) {
+            if (this.eventHandler != null) this.eventHandler(this, args);
         }
     }
 }

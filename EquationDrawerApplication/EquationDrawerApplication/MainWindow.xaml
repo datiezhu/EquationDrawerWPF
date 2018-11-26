@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:EquationDrawerApplication"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Background="#FF181818">
+   
     <StackPanel Orientation="Horizontal">
         <Button Name="Button" Content="Push me" Width="90" Height="20" Click="Button_Click" VerticalAlignment="Top" ></Button>
-        <Label Content="Label"/>
+        <Label Name="myLabel"  Content="Label"/>
     </StackPanel>
 </Window>
