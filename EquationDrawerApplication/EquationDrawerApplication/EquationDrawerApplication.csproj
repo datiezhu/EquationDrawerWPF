@@ -39,7 +39,9 @@
       <HintPath>..\..\..\..\..\Desktop\MathParser.org-mXparser.Net452.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Controls.Input.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Infragistics.Themes.MetroDark.Wpf.1.0.0\lib\net40\System.Windows.Controls.Input.Toolkit.dll</HintPath>
     </Reference>
@@ -61,6 +63,9 @@
     <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Infragistics.Themes.MetroDark.Wpf.1.0.0\lib\net40\WPFToolkit.dll</HintPath>
     </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\..\..\..\..\Desktop\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -80,7 +85,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PreferencesWindow.xaml">
+    <Page Include="FunctionsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -106,8 +111,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PreferencesWindow.xaml.cs">
-      <DependentUpon>PreferencesWindow.xaml</DependentUpon>
+    <Compile Include="FunctionsWindow.xaml.cs">
+      <DependentUpon>FunctionsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -137,6 +142,30 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Themes\MetroDark\HowToApplyTheme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\zoomOut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\zoomIn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\axisHome.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\functions.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\customize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\close.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
