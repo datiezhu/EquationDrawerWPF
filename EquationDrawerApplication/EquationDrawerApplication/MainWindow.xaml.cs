@@ -53,13 +53,21 @@ namespace EquationDrawerApplication
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-            PreferencesWindow preferencesWindow = new PreferencesWindow();
-                   preferencesWindow.eventHandler += eventHandler;
-                       preferencesWindow.Owner = this;
-                       preferencesWindow.Show();
+
+        private void zoomInButtonListener(object sender, RoutedEventArgs e) {
         }
+        private void zoomOutButtonListener(object sender, RoutedEventArgs e){
+        }
+        private void homeButtonListener(object sender, RoutedEventArgs e){
+        }
+        private void personalizeInButtonListener(object sender, RoutedEventArgs e){
+        }
+        private void functionsButtonListener(object sender, RoutedEventArgs e){
+        }
+        private void exportButtonListener(object sender, RoutedEventArgs e){
+        }
+
+
+       
     }
 }

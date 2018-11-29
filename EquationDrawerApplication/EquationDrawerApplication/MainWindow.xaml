@@ -11,22 +11,19 @@
 
         <StackPanel DockPanel.Dock="Top">
             <ToolBar ToolBarTray.IsLocked="True" DockPanel.Dock="Top" HorizontalAlignment="Center" Background="#FF181818" Loaded="ToolBar_Loaded">
-                <Button ToolTip="Create a new file">
+                <Button Name="zoomOutButton" ToolTip="Create a new file" Click="zoomOutButtonListener">
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/zoomOut.png" />
                         <Label Content="Zoom Out"/>
                     </StackPanel>
                 </Button>
-                <Button>
+                <Button Name="zoomInButton" Click="zoomInButtonListener">
                     <Button.ToolTip>
                         <StackPanel>
                             <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5"><Run Text="Open file"/></TextBlock>
                             <TextBlock><Run Text="Search your computer or local network"/><LineBreak /><Run Text="for a file and open it for editing."/></TextBlock>
                             <Border BorderBrush="Silver" BorderThickness="0,1,0,0" Margin="0,8" />
-                            <WrapPanel>
-                                <Image Source="/WpfTutorialSamples;component/Images/help.png" Margin="0,0,5,0" />
-                                <TextBlock FontStyle="Italic"><Run Text="Press F1 for more help"/></TextBlock>
-                            </WrapPanel>
+                            
                         </StackPanel>
                     </Button.ToolTip>
                     <StackPanel Orientation="Vertical">
@@ -34,25 +31,25 @@
                         <Label Content="Zoom In"/>
                     </StackPanel>
                 </Button>
-                <Button ToolTip="Create a new file">
+                <Button ToolTip="Create a new file" Name="homeButton" Click="homeButtonListener">
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/axisHome.png" />
                         <Label Content="Home"/>
                     </StackPanel>
                 </Button>
-                <Button ToolTip="Create a new file" Click="Button_Click">
+                <Button ToolTip="Create a new file" Name="functionButton" Click="functionsButtonListener">
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/functions.png" />
                         <Label Content="Funciones"/>
                     </StackPanel>
                 </Button>
-                <Button ToolTip="Create a new file">
+                <Button ToolTip="Create a new file" Click="personalizeInButtonListener" Name="personalizeButton">
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/customize.png" />
                         <Label Content="Personalizar"/>
                     </StackPanel>
                 </Button>
-                <Button ToolTip="Create a new file">
+                <Button ToolTip="Create a new file" Name="exportButton" Click="exportButtonListener">
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/save.png" />
                         <Label Content="Expoortar imagen"/>
@@ -61,16 +58,26 @@
             </ToolBar>
             <Separator />
         </StackPanel>
-        
-        
-       
-            <StackPanel Orientation="Vertical" DockPanel.Dock="Left" Width="auto">
-                
 
+
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical">
+                <Label Content="Funciones" Margin="5,5,5,5" HorizontalAlignment="Center"/>
             </StackPanel>
-            <Canvas DockPanel.Dock="Right" >
 
+            <Canvas Name="myCanvas" Grid.Column="1" Background="#FF8B4F4F" Margin="5,5,5,5">
+                
             </Canvas>
+        </Grid>
+            
 
     </DockPanel>
 </Window>
