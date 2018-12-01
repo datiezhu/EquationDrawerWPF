@@ -4,10 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EquationDrawerApplication"
+        xmlns:converters="clr-namespace:EquationDrawerApplication.ViewModels.Converter"
+        xmlns:equations="clr-namespace:EquationDrawerApplication.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="#FF181818" >
+        Title="MainWindow" Height="606.466" Width="1078.899" Background="#FF181818" >
 
-    <DockPanel Height="419.4">
+    <Window.Resources>
+        <equations:ViewModelBase x:Key="equations" />
+        <converters:BackgroundColorConverter x:Key="converter" />
+    </Window.Resources>
+
+    <DockPanel >
 
         <StackPanel DockPanel.Dock="Top">
             <ToolBar ToolBarTray.IsLocked="True" DockPanel.Dock="Top" HorizontalAlignment="Center" Background="#FF181818" Loaded="ToolBar_Loaded">
@@ -23,7 +30,7 @@
                             <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5"><Run Text="Open file"/></TextBlock>
                             <TextBlock><Run Text="Search your computer or local network"/><LineBreak /><Run Text="for a file and open it for editing."/></TextBlock>
                             <Border BorderBrush="Silver" BorderThickness="0,1,0,0" Margin="0,8" />
-                            
+
                         </StackPanel>
                     </Button.ToolTip>
                     <StackPanel Orientation="Vertical">
@@ -69,15 +76,41 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Vertical">
-                <Label Content="Funciones" Margin="5,5,5,5" HorizontalAlignment="Center"/>
-            </StackPanel>
-
-            <Canvas Name="myCanvas" Grid.Column="1" Background="#FF8B4F4F" Margin="5,5,5,5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 
+                <Label Content="Funciones" Margin="5,5,5,5" HorizontalAlignment="Center"/>
+                <ListView Name="equationsListView" Grid.Row="3" Margin="5" DataContext="{Binding Mode=OneWay, Source={StaticResource ViewModelBase}}" ItemsSource="{Binding}" Background="Transparent" Foreground="#FFB0B0B0" BorderBrush="Transparent">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="240">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <CheckBox Grid.Column="0" />
+                                <TextBlock Grid.Column="1" Text="{Binding Expression}"/>
+                                <Ellipse Grid.Column="2" Margin="0,-13,5,0" Width="20" Height="20" Fill="{Binding Color, Converter={StaticResource converter}}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    
+                </ListView>
+
+            </Grid>
+            
+            
+
+            <Canvas Name="myCanvas" Grid.Column="1" Background="#FF1E1E1F" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
+
             </Canvas>
         </Grid>
-            
+
 
     </DockPanel>
 </Window>

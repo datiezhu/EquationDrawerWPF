@@ -19,9 +19,15 @@ namespace EquationDrawerApplication
     /// </summary>
     public partial class FunctionWindow : Window
     {
+        //private Model model;
         public FunctionWindow()
         {
             InitializeComponent();
+        }
+
+        private void onColorChanged(object sender, RoutedEventArgs args){
+            
+
         }
     }
 }
