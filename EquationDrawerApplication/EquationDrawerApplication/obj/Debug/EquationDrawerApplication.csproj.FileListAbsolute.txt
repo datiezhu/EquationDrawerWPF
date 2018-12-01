@@ -58,3 +58,4 @@ E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\Equation
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\EquationDrawerApplication.exe
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\EquationDrawerApplication.pdb
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\xamo\Documents\Github Projects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\GeneratedInternalTypeHelper.g.cs

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EquationDrawerApplication.Models;
 using EquationDrawerApplication.ViewModels;
 using org.mariuszgromada.math.mxparser;
 using Expression = org.mariuszgromada.math.mxparser.Expression;
@@ -26,6 +28,7 @@ namespace EquationDrawerApplication
         //Attributes
         private Canvas canvas;
         private Transformation transformation;
+        private Data model;
         //private Model model;
 
         //Delegates
@@ -34,8 +37,9 @@ namespace EquationDrawerApplication
         {
             //viewModel = new ViewModelBase();
             InitializeComponent();
+            model = Application.Current.Resources["model"] as Data;
             //DataContext = viewModel;
-          //  model = new Model();
+            //  model = new Model();
         }
 
 
@@ -70,14 +74,21 @@ namespace EquationDrawerApplication
             canvas.Children.Clear();
             this.transformation = new Transformation(canvas);
             transformation.setInterval(-20, 20, -20, 20);
-          //  if (model.wantAxis()) drawAxis();
-          //  if (model.wantTicks()) drawTicks();
-          //  if (model.wantNumbers()) drawNumbers();
+            
+            if (model.wantAxis()) drawAxis();
+            if (model.wantTicks()) drawTicks();
+            if (model.wantNumbers()) drawNumbers();
         }
 
         //Functions Window Listeners
         void onAddFunctionListener(object sender, EventArgs args) {
 
+        }
+
+        //Events
+        void onTextBoxChanged(object sender, EventArgs args) {
+            Debug.WriteLine("HOLAA");
+            drawChart();
         }
 
         //Draw Methods
@@ -114,6 +125,8 @@ namespace EquationDrawerApplication
         }
         private void personalizeInButtonListener(object sender, RoutedEventArgs e){
             PersonalizeWindow personalizeWindow = new PersonalizeWindow();
+            personalizeWindow.OnCheckBoxEventHandler += onTextBoxChanged;
+            personalizeWindow.Owner = this;
             personalizeWindow.Show();
         }
         private void functionsButtonListener(object sender, RoutedEventArgs e){

@@ -17,11 +17,21 @@ namespace EquationDrawerApplication
     /// <summary>
     /// Interaction logic for PersonalizeWindow.xaml
     /// </summary>
+    public delegate void OnCheckBoxEventHandler(object sender, EventArgs args);
     public partial class PersonalizeWindow : Window
     {
+        public event OnCheckBoxEventHandler OnCheckBoxEventHandler;
         public PersonalizeWindow()
         {
             InitializeComponent();
+        }
+
+
+        protected virtual void onCheckBoxEventHandler(EventArgs args) {
+            if (this.OnCheckBoxEventHandler != null) this.OnCheckBoxEventHandler(this, args);
+        }
+        private void onCheckButtonListener(object sender, RoutedEventArgs args) {
+            onCheckBoxEventHandler(null);
         }
     }
 }

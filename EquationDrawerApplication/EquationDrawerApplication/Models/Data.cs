@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace EquationDrawerApplication.Models
 {
@@ -55,6 +56,13 @@ namespace EquationDrawerApplication.Models
             set { maxY = value; OnPropertyChanged("MaxY"); }
         }
 
+        public Color backgroundColor;
+        public Color BackgroundColor
+        {
+            get { return backgroundColor; }
+            set { backgroundColor = value; OnPropertyChanged("BackgroundColor"); }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -63,6 +71,7 @@ namespace EquationDrawerApplication.Models
             Axis = Tick = Numbers = Grid = true;
             minX = minY = -20;
             maxX = maxY = 20;
+            backgroundColor = Color.FromRgb(2, 255, 0);
         }
 
         public bool wantAxis()

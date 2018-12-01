@@ -10,6 +10,7 @@
         Title="MainWindow" Height="606.466" Width="1078.899" Background="#FF181818" >
 
     <Window.Resources>
+        <converters:BackgroundColorConverter x:Key="BackgroundColorConverter"/>
         <equations:ViewModelBase x:Key="equations" />
         <converters:BackgroundColorConverter x:Key="converter" />
     </Window.Resources>
@@ -106,7 +107,7 @@
             
             
 
-            <Canvas Name="myCanvas" Grid.Column="1" Background="#FF1E1E1F" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
+            <Canvas Name="myCanvas" Grid.Column="1" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
 
             </Canvas>
         </Grid>
