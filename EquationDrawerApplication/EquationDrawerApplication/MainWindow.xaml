@@ -107,7 +107,7 @@
             
             
 
-            <Canvas Name="myCanvas" Grid.Column="1" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
+            <Canvas ClipToBounds="True" Name="myCanvas" Grid.Column="1" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
 
             </Canvas>
         </Grid>

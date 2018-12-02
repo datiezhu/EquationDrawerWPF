@@ -18,9 +18,11 @@ namespace EquationDrawerApplication
     /// Interaction logic for PersonalizeWindow.xaml
     /// </summary>
     public delegate void OnCheckBoxEventHandler(object sender, EventArgs args);
+    public delegate void OnIntervalEventHandler(object sender, EventArgs args);
     public partial class PersonalizeWindow : Window
     {
         public event OnCheckBoxEventHandler OnCheckBoxEventHandler;
+        public event OnIntervalEventHandler OnIntervalEventHandler;
         public PersonalizeWindow()
         {
             InitializeComponent();
@@ -32,6 +34,15 @@ namespace EquationDrawerApplication
         }
         private void onCheckButtonListener(object sender, RoutedEventArgs args) {
             onCheckBoxEventHandler(null);
+        }
+
+        protected virtual void onIntervalEventHandler(EventArgs args)
+        {
+            if (this.OnIntervalEventHandler != null) this.OnIntervalEventHandler(this, args);
+        }
+        private void onIntervalListener(object sender, RoutedEventArgs args)
+        {
+            onIntervalEventHandler(null);
         }
     }
 }

@@ -73,9 +73,10 @@ namespace EquationDrawerApplication
             this.canvas = myCanvas;
             canvas.Children.Clear();
             this.transformation = new Transformation(canvas);
-            transformation.setInterval(-20, 20, -20, 20);
+            transformation.setInterval(model.minX, model.MaxX, model.MinY, model.MaxY);
             
             if (model.wantAxis()) drawAxis();
+            if (model.wantGrid()) drawGrid();
             if (model.wantTicks()) drawTicks();
             if (model.wantNumbers()) drawNumbers();
         }
@@ -86,8 +87,10 @@ namespace EquationDrawerApplication
         }
 
         //Events
-        void onTextBoxChanged(object sender, EventArgs args) {
-            Debug.WriteLine("HOLAA");
+        void onCheckBoxChanged(object sender, EventArgs args) {
+            drawChart();
+        }
+        void onIntervalChanged(object sender, EventArgs args) {
             drawChart();
         }
 
@@ -111,8 +114,357 @@ namespace EquationDrawerApplication
             canvas.Children.Add(ejeX);
             canvas.Children.Add(ejeY);
         }
-        private void drawTicks() { }
-        private void drawNumbers() { }
+        private void drawGrid()
+        {
+            double xMin, xMax, yMin, yMax, stepValueX,stepValueY, width, height;
+            double widthScreen, heightScreen;
+            xMin = model.MinX;
+            xMax = model.MaxX;
+            yMin = model.MinY;
+            yMax = model.MaxY;
+            widthScreen = transformation.maxScreenX;
+            heightScreen = transformation.maxScreenY;
+            width = xMax - xMin;
+            height = yMax - yMin;
+            stepValueX = width/14;
+            stepValueY = height / 10;
+            //Eje X
+            if (xMin >= 0) {
+                for (double i = xMin + stepValueX; i <= width+xMin; i += stepValueX) {
+                    Line line = new Line();
+                    line.Stroke = Brushes.Gray;
+                    line.X1 =transformation.getScreenX(i);
+                    line.Y1 = transformation.minScreenY;
+                    line.X2 = transformation.getScreenX(i);
+                    line.Y2 =heightScreen;
+                    canvas.Children.Add(line);
+                }
+            }
+            if (xMin < 0 && xMax > 0)
+            {
+                for (double i = stepValueX; i <= width; i += stepValueX){ //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Gray;
+                    line.X1 = transformation.getScreenX(i);
+                    line.Y1 = transformation.minScreenY;
+                    line.X2 = transformation.getScreenX(i);
+                    line.Y2 = heightScreen;
+                    canvas.Children.Add(line);
+                }
+                for(double i=-stepValueX; i>=xMin;i-=stepValueX){ //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Gray;
+                    line.X1 = transformation.getScreenX(i);
+                    line.Y1 = transformation.minScreenY;
+                    line.X2 = transformation.getScreenX(i);
+                    line.Y2 = heightScreen;
+                    canvas.Children.Add(line);
+                }
+            }if(xMax<=0){
+                for(double i=xMax-stepValueX; i>=xMin;i-=stepValueX){ //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Gray;
+                    line.X1 = transformation.getScreenX(i);
+                    line.Y1 = transformation.minScreenY;
+                    line.X2 = transformation.getScreenX(i);
+                    line.Y2 = heightScreen;
+                    canvas.Children.Add(line);
+                }
+            }
+
+            //Eje Y
+            if (yMin >= 0)
+            {
+                for (double i = yMin + stepValueY; i <= height + yMin; i += stepValueY)
+                { //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Gray;
+                    line.X1 = transformation.minScreenX;
+                    line.Y1 = transformation.getScreenY(i);
+                    line.X2 = widthScreen;
+                    line.Y2 = transformation.getScreenY(i);
+                    canvas.Children.Add(line);
+                }
+            }if(yMin<0 && yMax>0){
+                for(double i =stepValueY; i<=height;i+=stepValueY){ //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Gray;
+                    line.X1 = transformation.minScreenX;
+                    line.Y1 = transformation.getScreenY(i);
+                    line.X2 = widthScreen;
+                    line.Y2 = transformation.getScreenY(i);
+                    canvas.Children.Add(line);
+                }
+                for(double i =-stepValueY; i>=yMin;i-=stepValueY){ //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Gray;
+                    line.X1 = transformation.minScreenX;
+                    line.Y1 = transformation.getScreenY(i);
+                    line.X2 = widthScreen;
+                    line.Y2 = transformation.getScreenY(i);
+                    canvas.Children.Add(line);
+                }
+            }if(yMax<=0){
+                for(double i =yMax-stepValueY; i>=yMin;i-=stepValueY){ //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Gray;
+                    line.X1 = transformation.minScreenX;
+                    line.Y1 = transformation.getScreenY(i);
+                    line.X2 = widthScreen;
+                    line.Y2 = transformation.getScreenY(i);
+                    canvas.Children.Add(line);
+                }
+            }
+        }
+
+
+
+        
+        private void drawTicks() {
+            double xMin, xMax, yMin, yMax, stepValueX, stepValueY, width, height;
+            double widthScreen, heightScreen;
+            xMin = model.MinX;
+            xMax = model.MaxX;
+            yMin = model.MinY;
+            yMax = model.MaxY;
+            widthScreen = transformation.maxScreenX;
+            heightScreen = transformation.maxScreenY;
+            width = xMax - xMin;
+            height = yMax - yMin;
+            stepValueX = width / 14;
+            stepValueY = height / 10;
+            //Eje X
+            double yValue;
+            if (yMin <= 0 && yMax > 0) yValue = 0;
+            else if (yMin > 0) yValue = yMin;
+            else yValue = yMax;
+            if (xMin >= 0)
+            {
+                for (double i = xMin + stepValueX; i <= width + xMin; i += stepValueX)
+                {
+                    Line line = new Line();
+                    line.Stroke = Brushes.Black;
+                    line.X1 = transformation.getScreenX(i);
+                    line.Y1 = transformation.getScreenY(yValue - stepValueY/5);
+                    line.X2 = transformation.getScreenX(i);
+                    line.Y2 = transformation.getScreenY(yValue+stepValueY / 5);
+                    canvas.Children.Add(line);
+                }
+            }
+            if (xMin < 0 && xMax > 0)
+            {
+                for (double i = stepValueX; i <= width; i += stepValueX)
+                { //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Black;
+                    line.X1 = transformation.getScreenX(i);
+                    line.Y1 = transformation.getScreenY(yValue - stepValueY / 5);
+                    line.X2 = transformation.getScreenX(i);
+                    line.Y2 = transformation.getScreenY(yValue+stepValueY / 5);
+                    canvas.Children.Add(line);
+                }
+                for (double i = -stepValueX; i >= xMin; i -= stepValueX)
+                { //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Black;
+                    line.X1 = transformation.getScreenX(i);
+                    line.Y1 = transformation.getScreenY(yValue - stepValueY / 5);
+                    line.X2 = transformation.getScreenX(i);
+                    line.Y2 = transformation.getScreenY(yValue+stepValueY / 5);
+                    canvas.Children.Add(line);
+                }
+            }
+            if (xMax <= 0)
+            {
+                for (double i = xMax - stepValueX; i >= xMin; i -= stepValueX)
+                { //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Black;
+                    line.X1 = transformation.getScreenX(i);
+                    line.Y1 = transformation.getScreenY(yValue - stepValueY / 5);
+                    line.X2 = transformation.getScreenX(i);
+                    line.Y2 = transformation.getScreenY(yValue+stepValueY / 5);
+                    canvas.Children.Add(line);
+                }
+            }
+
+            //Eje Y
+            double xValue;
+            if (xMin <= 0 && xMax > 0) xValue = 0;
+            else if (xMin > 0) xValue = xMin;
+            else xValue = xMax;
+            if (yMin >= 0)
+            {
+                for (double i = yMin + stepValueY; i <= height + yMin; i += stepValueY)
+                { //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Black;
+                    line.X1 = transformation.getScreenX(xValue - stepValueX/5);
+                    line.Y1 = transformation.getScreenY(i);
+                    line.X2 = transformation.getScreenX(xValue + stepValueX / 5);
+                    line.Y2 = transformation.getScreenY(i);
+                    canvas.Children.Add(line);
+                }
+            }
+            if (yMin < 0 && yMax > 0)
+            {
+                
+                
+                for (double i = stepValueY; i <= height; i += stepValueY)
+                { //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Black;
+                    line.X1 = transformation.getScreenX(xValue - stepValueX / 5);
+                    line.Y1 = transformation.getScreenY(i);
+                    line.X2 = transformation.getScreenX(xValue+stepValueX / 5);
+                    line.Y2 = transformation.getScreenY(i);
+                    canvas.Children.Add(line);
+                }
+                for (double i = -stepValueY; i >= yMin; i -= stepValueY)
+                { //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Black;
+                    line.X1 = transformation.getScreenX(xValue - stepValueX / 5);
+                    line.Y1 = transformation.getScreenY(i);
+                    line.X2 = transformation.getScreenX(xValue+stepValueX / 5);
+                    line.Y2 = transformation.getScreenY(i);
+                    canvas.Children.Add(line);
+                }
+            }
+            if (yMax <= 0)
+            {
+                for (double i = yMax - stepValueY; i >= yMin; i -= stepValueY)
+                { //Grid Vertical Positivo
+                    Line line = new Line();
+                    line.Stroke = Brushes.Black;
+                    line.X1 = transformation.getScreenX(xValue - stepValueX / 5);
+                    line.Y1 = transformation.getScreenY(i);
+                    line.X2 = transformation.getScreenX(xValue+stepValueX / 5);
+                    line.Y2 = transformation.getScreenY(i);
+                    canvas.Children.Add(line);
+                }
+            }
+        }
+        private void drawNumbers() {
+            double xMin, xMax, yMin, yMax, stepValueX, stepValueY, width, height;
+            double widthScreen, heightScreen;
+            xMin = model.MinX;
+            xMax = model.MaxX;
+            yMin = model.MinY;
+            yMax = model.MaxY;
+            widthScreen = transformation.maxScreenX;
+            heightScreen = transformation.maxScreenY;
+            width = xMax - xMin;
+            height = yMax - yMin;
+            stepValueX = width / 14;
+            stepValueY = height / 10;
+            //Eje X
+            double yValue;
+            if (yMin < 0 && yMax > 0) yValue = 0;
+            else if (yMin >= 0) yValue = yMin+ 4*(stepValueY/5);
+            else yValue = yMax;
+            if (xMin >= 0)
+            {
+                for (double i = xMin + stepValueX; i <= width + xMin; i += stepValueX)
+                {
+                    TextBlock number = new TextBlock();
+                    number.Text = i.ToString("#.##");
+                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    Canvas.SetLeft(number, transformation.getScreenX(i - stepValueX / 5));
+                    Canvas.SetTop(number, transformation.getScreenY(yValue - stepValueY / 5));
+                    canvas.Children.Add(number);
+                }
+            }
+            if (xMin < 0 && xMax > 0)
+            {
+                for (double i = stepValueX; i <= width; i += stepValueX)
+                { //Grid Vertical Positivo
+                    TextBlock number = new TextBlock();
+                    number.Text = i.ToString("#.##");
+                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    Canvas.SetLeft(number, transformation.getScreenX(i - stepValueX / 5));
+                    Canvas.SetTop(number, transformation.getScreenY(yValue - stepValueY / 5));
+                    canvas.Children.Add(number);
+                }
+                for (double i = -stepValueX; i >= xMin; i -= stepValueX)
+                { //Grid Vertical Positivo
+                    TextBlock number = new TextBlock();
+                    number.Text = i.ToString("#.##");
+                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    Canvas.SetLeft(number, transformation.getScreenX(i - stepValueX / 5));
+                    Canvas.SetTop(number, transformation.getScreenY(yValue - stepValueY / 5));
+                    canvas.Children.Add(number);
+                }
+            }
+            if (xMax <= 0)
+            {
+                for (double i = xMax - stepValueX; i >= xMin; i -= stepValueX)
+                { //Grid Vertical Positivo
+                    TextBlock number = new TextBlock();
+                    number.Text = i.ToString("#.##");
+                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    Canvas.SetLeft(number, transformation.getScreenX(i - stepValueX / 5));
+                    Canvas.SetTop(number, transformation.getScreenY(yValue - stepValueY / 5));
+                    canvas.Children.Add(number);
+                }
+            }
+
+            //Eje Y
+            double xValue;
+            if (xMin <= 0 && xMax > 0) xValue = 0;
+            else if (xMin > 0) xValue = xMin;
+            else xValue = xMax - 4*(stepValueX/5) ;
+            if (yMin >= 0)
+            {
+                for (double i = yMin + stepValueY; i <= height + yMin; i += stepValueY)
+                { //Grid Vertical Positivo
+                    TextBlock number = new TextBlock();
+                    number.Text = i.ToString("#.##");
+                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    Canvas.SetLeft(number, transformation.getScreenX(xValue + stepValueX / 4));
+                    Canvas.SetTop(number, transformation.getScreenY(i + stepValueY / 5));
+                    canvas.Children.Add(number);
+                }
+            }
+            if (yMin < 0 && yMax > 0)
+            {
+
+
+                for (double i = stepValueY; i <= height; i += stepValueY)
+                { //Grid Vertical Positivo
+                    TextBlock number = new TextBlock();
+                    number.Text = i.ToString("#.##");
+                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    Canvas.SetLeft(number, transformation.getScreenX(xValue + stepValueX / 4));
+                    Canvas.SetTop(number, transformation.getScreenY(i + stepValueY / 5));
+                    canvas.Children.Add(number);
+                }
+                for (double i = -stepValueY; i >= yMin; i -= stepValueY)
+                { //Grid Vertical Positivo
+                    TextBlock number = new TextBlock();
+                    number.Text = i.ToString("#.##");
+                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    Canvas.SetLeft(number, transformation.getScreenX(xValue + stepValueX / 4));
+                    Canvas.SetTop(number, transformation.getScreenY(i + stepValueY / 5));
+                    canvas.Children.Add(number);
+                }
+            }
+            if (yMax <= 0)
+            {
+                for (double i = yMax - stepValueY; i >= yMin; i -= stepValueY)
+                { //Grid Vertical Positivo
+                    TextBlock number = new TextBlock();
+                    number.Text = i.ToString("#.##");
+                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    Canvas.SetLeft(number, transformation.getScreenX(xValue + stepValueX / 4));
+                    Canvas.SetTop(number, transformation.getScreenY(i + stepValueY / 5));
+                    canvas.Children.Add(number);
+                }
+            }
+
+
+
+        }
 
         //Button Listeners
         private void onLoadedCanvas(object sender, RoutedEventArgs e) { this.drawChart(); }
@@ -125,7 +477,8 @@ namespace EquationDrawerApplication
         }
         private void personalizeInButtonListener(object sender, RoutedEventArgs e){
             PersonalizeWindow personalizeWindow = new PersonalizeWindow();
-            personalizeWindow.OnCheckBoxEventHandler += onTextBoxChanged;
+            personalizeWindow.OnCheckBoxEventHandler += onCheckBoxChanged;
+            personalizeWindow.OnIntervalEventHandler += onIntervalChanged;
             personalizeWindow.Owner = this;
             personalizeWindow.Show();
         }
