@@ -1,9 +1,12 @@
-﻿using System;
+﻿using EquationDrawerApplication.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace EquationDrawerApplication.Models
@@ -71,7 +74,7 @@ namespace EquationDrawerApplication.Models
             Axis = Tick = Numbers = Grid = true;
             minX = minY = -20;
             maxX = maxY = 20;
-            backgroundColor = Color.FromRgb(2, 255, 0);
+            backgroundColor = Color.FromRgb(55, 55, 55);
         }
 
         public bool wantAxis()
@@ -91,7 +94,49 @@ namespace EquationDrawerApplication.Models
             return Numbers;
         }
 
+        public void goHome() {
+            minX = minY = -20;
+            maxX = maxY = 20;    
+        }
+        public void zoomIn() {
+            minX /= 2;
+            minY /= 2;
+            maxX /= 2;
+            maxY /= 2;
+        }
+        public void drag(Point start, Point end) {
+            Debug.WriteLine("Xmin: " + minX + "Xmax: " + maxX + "Ymin: " + minY + "Ymax: " + maxY);
+            if (start.X < end.X && Math.Abs(end.X-start.X)> 15)
+            { 
+                maxX -= 0.60 * (maxX-minX)/100;
+                minX -= 0.60 * (maxX - minX) / 100;
+            }
+            else if(start.X > end.X && Math.Abs(end.X - start.X) > 15)
+            {
+                maxX += 0.60 * (maxX - minX) / 100;
+                minX += 0.60 * (maxX - minX) / 100;
+            }
 
+            if (start.Y < end.Y && Math.Abs(end.Y - start.Y) > 15)
+            {
+                maxY += 0.60 * (maxY - minY) / 100;
+                minY += 0.60 * (maxY - minY) / 100;
+            }
+            else if (start.Y > end.Y && Math.Abs(end.Y - start.Y) > 15)
+            {
+                maxY -= 0.60 * (maxY - minY) / 100;
+                minY -= 0.60 * (maxY - minY) / 100;
+            }
+            Debug.WriteLine("Xmin: " + minX + "Xmax: " + maxX + "Ymin: " + minY + "Ymax: " + maxY);
+
+        }
+        public void zoomOut()
+        {
+            minX *= 2;
+            minY *= 2;
+            maxX *= 2;
+            maxY *= 2;
+        }
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

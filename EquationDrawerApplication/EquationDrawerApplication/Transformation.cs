@@ -17,7 +17,7 @@ namespace EquationDrawerApplication
         public double maxX { get; set; }
         public double maxY { get; set; }
 
-        private double numPoints;
+        public double numPoints { get;}
         public Transformation(Canvas canvas)
         {
             minScreenX = 0;

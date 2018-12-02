@@ -20,14 +20,16 @@ namespace EquationDrawerApplication.ViewModels
         public AddFunctionCommand addFunctionCommand { get; set; }
         public ViewModelBase() {
             this.addFunctionCommand = new AddFunctionCommand(this);
-            for (int i = 0; i < 5; i++)
-            {
-                Add(new Equation()
-                {
-                    Name = "Name " + i,
-                    Expression = "Expression " + i
-                });
-            }
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    Add(new Equation()
+            //    {
+            //        Name = "Name " + i,
+            //        Active = true,
+            //        Expression = "Expression " + i
+
+            //    });
+            //}
 
         }
 

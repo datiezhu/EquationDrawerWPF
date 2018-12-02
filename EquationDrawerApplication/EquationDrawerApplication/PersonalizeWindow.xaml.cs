@@ -1,6 +1,9 @@
-﻿using System;
+﻿using EquationDrawerApplication.Model;
+using EquationDrawerApplication.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,15 +22,37 @@ namespace EquationDrawerApplication
     /// </summary>
     public delegate void OnCheckBoxEventHandler(object sender, EventArgs args);
     public delegate void OnIntervalEventHandler(object sender, EventArgs args);
+    public delegate void OnSliderChangedEventHandler(object sender, EventArgs args);
     public partial class PersonalizeWindow : Window
     {
+
+
+        private ViewModelBase equations;
         public event OnCheckBoxEventHandler OnCheckBoxEventHandler;
         public event OnIntervalEventHandler OnIntervalEventHandler;
+        public event OnSliderChangedEventHandler OnSliderChangedEventHandler;
         public PersonalizeWindow()
         {
             InitializeComponent();
+            equations = Application.Current.Resources["ViewModelBase"] as ViewModelBase;
         }
 
+        private void onTableViewSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            Equation equation = ((sender as ListView).SelectedItem as Equation);
+
+        }
+
+
+
+        protected virtual void onSliderChangedEventHandler(EventArgs args)
+        {
+            if (this.OnSliderChangedEventHandler != null) this.OnSliderChangedEventHandler(this, args);
+        }
+        private void onSliderChangedListener(object sender, RoutedEventArgs args)
+        {
+            onSliderChangedEventHandler(null);
+        }
 
         protected virtual void onCheckBoxEventHandler(EventArgs args) {
             if (this.OnCheckBoxEventHandler != null) this.OnCheckBoxEventHandler(this, args);

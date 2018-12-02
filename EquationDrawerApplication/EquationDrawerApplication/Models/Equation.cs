@@ -51,6 +51,7 @@ namespace EquationDrawerApplication.Model
             Name="";
             Expression ="";
             Active = false;
+            Width = 3;
             Color = Color.FromRgb(255, 255, 0);
         }
 

@@ -19,6 +19,7 @@
 
         <StackPanel DockPanel.Dock="Top">
             <ToolBar ToolBarTray.IsLocked="True" DockPanel.Dock="Top" HorizontalAlignment="Center" Background="#FF181818" Loaded="ToolBar_Loaded">
+               
                 <Button Name="zoomOutButton" ToolTip="Create a new file" Click="zoomOutButtonListener">
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/zoomOut.png" />
@@ -85,6 +86,18 @@
                 
                 <Label Content="Funciones" Margin="5,5,5,5" HorizontalAlignment="Center"/>
                 <ListView Name="equationsListView" Grid.Row="3" Margin="5" DataContext="{Binding Mode=OneWay, Source={StaticResource ViewModelBase}}" ItemsSource="{Binding}" Background="Transparent" Foreground="#FFB0B0B0" BorderBrush="Transparent">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <ContentPresenter />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Width="240">
@@ -94,9 +107,16 @@
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <CheckBox Grid.Column="0" />
+                                <CheckBox Checked="functionCheckBoxListener" Unchecked="functionCheckBoxListener" Grid.Column="0" IsChecked="{Binding Active}"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Expression}"/>
-                                <Ellipse Grid.Column="2" Margin="0,-13,5,0" Width="20" Height="20" Fill="{Binding Color, Converter={StaticResource converter}}"/>
+                                <Button Grid.Column="2" Margin="0,-10,5,0" Click="onTouchEllipseEvent">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Ellipse  Width="20" Height="20" Fill="{Binding Color, Converter={StaticResource converter}}"/>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -107,7 +127,7 @@
             
             
 
-            <Canvas ClipToBounds="True" Name="myCanvas" Grid.Column="1" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
+            <Canvas MouseMove="onMouseMoved" MouseDown="onMouseDown" MouseUp="onMouseUp" ClipToBounds="True" Name="myCanvas" Grid.Column="1" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
 
             </Canvas>
         </Grid>

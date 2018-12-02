@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EquationDrawerApplication.Model;
 using EquationDrawerApplication.Models;
 using EquationDrawerApplication.ViewModels;
+using Microsoft.Win32;
 using org.mariuszgromada.math.mxparser;
+using Xceed.Wpf.Toolkit;
 using Expression = org.mariuszgromada.math.mxparser.Expression;
 
 namespace EquationDrawerApplication
@@ -29,6 +33,7 @@ namespace EquationDrawerApplication
         private Canvas canvas;
         private Transformation transformation;
         private Data model;
+        private ViewModelBase equations;
         //private Model model;
 
         //Delegates
@@ -38,6 +43,7 @@ namespace EquationDrawerApplication
             //viewModel = new ViewModelBase();
             InitializeComponent();
             model = Application.Current.Resources["model"] as Data;
+            equations = Application.Current.Resources["ViewModelBase"] as ViewModelBase;
             //DataContext = viewModel;
             //  model = new Model();
         }
@@ -75,7 +81,7 @@ namespace EquationDrawerApplication
             this.transformation = new Transformation(canvas);
             transformation.setInterval(model.minX, model.MaxX, model.MinY, model.MaxY);
             
-            if (model.wantAxis()) drawAxis();
+            if(model.wantGrid() || model.wantAxis())drawAxis(model.wantAxis());
             if (model.wantGrid()) drawGrid();
             if (model.wantTicks()) drawTicks();
             if (model.wantNumbers()) drawNumbers();
@@ -88,18 +94,31 @@ namespace EquationDrawerApplication
 
         //Events
         void onCheckBoxChanged(object sender, EventArgs args) {
+            canvas.Children.Clear();
             drawChart();
+            drawEquations();
         }
         void onIntervalChanged(object sender, EventArgs args) {
+            canvas.Children.Clear();
             drawChart();
+            drawEquations();
+        }
+
+        void sliderChangedListener(object sender, EventArgs args)
+        {
+            canvas.Children.Clear();
+            drawChart();
+            drawEquations();
         }
 
         //Draw Methods
-        private void drawAxis() {
+        private void drawAxis(bool axis) {
             Line ejeX = new Line();
             Line ejeY = new Line();
-
-            ejeX.Stroke = ejeY.Stroke = Brushes.Black;
+            if(axis)
+                ejeX.Stroke = ejeY.Stroke = Brushes.White;
+            else
+                ejeX.Stroke = ejeY.Stroke = Brushes.Gray;
             ejeX.X1 = transformation.minScreenX;
             ejeX.Y1 = transformation.getScreenY(0);
             ejeX.X2 = transformation.maxScreenX;
@@ -243,7 +262,7 @@ namespace EquationDrawerApplication
                 for (double i = xMin + stepValueX; i <= width + xMin; i += stepValueX)
                 {
                     Line line = new Line();
-                    line.Stroke = Brushes.Black;
+                    line.Stroke = Brushes.White;
                     line.X1 = transformation.getScreenX(i);
                     line.Y1 = transformation.getScreenY(yValue - stepValueY/5);
                     line.X2 = transformation.getScreenX(i);
@@ -256,7 +275,7 @@ namespace EquationDrawerApplication
                 for (double i = stepValueX; i <= width; i += stepValueX)
                 { //Grid Vertical Positivo
                     Line line = new Line();
-                    line.Stroke = Brushes.Black;
+                    line.Stroke = Brushes.White;
                     line.X1 = transformation.getScreenX(i);
                     line.Y1 = transformation.getScreenY(yValue - stepValueY / 5);
                     line.X2 = transformation.getScreenX(i);
@@ -266,7 +285,7 @@ namespace EquationDrawerApplication
                 for (double i = -stepValueX; i >= xMin; i -= stepValueX)
                 { //Grid Vertical Positivo
                     Line line = new Line();
-                    line.Stroke = Brushes.Black;
+                    line.Stroke = Brushes.White;
                     line.X1 = transformation.getScreenX(i);
                     line.Y1 = transformation.getScreenY(yValue - stepValueY / 5);
                     line.X2 = transformation.getScreenX(i);
@@ -279,7 +298,7 @@ namespace EquationDrawerApplication
                 for (double i = xMax - stepValueX; i >= xMin; i -= stepValueX)
                 { //Grid Vertical Positivo
                     Line line = new Line();
-                    line.Stroke = Brushes.Black;
+                    line.Stroke = Brushes.White;
                     line.X1 = transformation.getScreenX(i);
                     line.Y1 = transformation.getScreenY(yValue - stepValueY / 5);
                     line.X2 = transformation.getScreenX(i);
@@ -298,7 +317,7 @@ namespace EquationDrawerApplication
                 for (double i = yMin + stepValueY; i <= height + yMin; i += stepValueY)
                 { //Grid Vertical Positivo
                     Line line = new Line();
-                    line.Stroke = Brushes.Black;
+                    line.Stroke = Brushes.White;
                     line.X1 = transformation.getScreenX(xValue - stepValueX/5);
                     line.Y1 = transformation.getScreenY(i);
                     line.X2 = transformation.getScreenX(xValue + stepValueX / 5);
@@ -313,7 +332,7 @@ namespace EquationDrawerApplication
                 for (double i = stepValueY; i <= height; i += stepValueY)
                 { //Grid Vertical Positivo
                     Line line = new Line();
-                    line.Stroke = Brushes.Black;
+                    line.Stroke = Brushes.White;
                     line.X1 = transformation.getScreenX(xValue - stepValueX / 5);
                     line.Y1 = transformation.getScreenY(i);
                     line.X2 = transformation.getScreenX(xValue+stepValueX / 5);
@@ -323,7 +342,7 @@ namespace EquationDrawerApplication
                 for (double i = -stepValueY; i >= yMin; i -= stepValueY)
                 { //Grid Vertical Positivo
                     Line line = new Line();
-                    line.Stroke = Brushes.Black;
+                    line.Stroke = Brushes.White;
                     line.X1 = transformation.getScreenX(xValue - stepValueX / 5);
                     line.Y1 = transformation.getScreenY(i);
                     line.X2 = transformation.getScreenX(xValue+stepValueX / 5);
@@ -336,7 +355,7 @@ namespace EquationDrawerApplication
                 for (double i = yMax - stepValueY; i >= yMin; i -= stepValueY)
                 { //Grid Vertical Positivo
                     Line line = new Line();
-                    line.Stroke = Brushes.Black;
+                    line.Stroke = Brushes.White;
                     line.X1 = transformation.getScreenX(xValue - stepValueX / 5);
                     line.Y1 = transformation.getScreenY(i);
                     line.X2 = transformation.getScreenX(xValue+stepValueX / 5);
@@ -369,7 +388,7 @@ namespace EquationDrawerApplication
                 {
                     TextBlock number = new TextBlock();
                     number.Text = i.ToString("#.##");
-                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    number.Foreground = new SolidColorBrush(Colors.White);
                     Canvas.SetLeft(number, transformation.getScreenX(i - stepValueX / 5));
                     Canvas.SetTop(number, transformation.getScreenY(yValue - stepValueY / 5));
                     canvas.Children.Add(number);
@@ -381,7 +400,7 @@ namespace EquationDrawerApplication
                 { //Grid Vertical Positivo
                     TextBlock number = new TextBlock();
                     number.Text = i.ToString("#.##");
-                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    number.Foreground = new SolidColorBrush(Colors.White);
                     Canvas.SetLeft(number, transformation.getScreenX(i - stepValueX / 5));
                     Canvas.SetTop(number, transformation.getScreenY(yValue - stepValueY / 5));
                     canvas.Children.Add(number);
@@ -390,7 +409,7 @@ namespace EquationDrawerApplication
                 { //Grid Vertical Positivo
                     TextBlock number = new TextBlock();
                     number.Text = i.ToString("#.##");
-                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    number.Foreground = new SolidColorBrush(Colors.White);
                     Canvas.SetLeft(number, transformation.getScreenX(i - stepValueX / 5));
                     Canvas.SetTop(number, transformation.getScreenY(yValue - stepValueY / 5));
                     canvas.Children.Add(number);
@@ -402,7 +421,7 @@ namespace EquationDrawerApplication
                 { //Grid Vertical Positivo
                     TextBlock number = new TextBlock();
                     number.Text = i.ToString("#.##");
-                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    number.Foreground = new SolidColorBrush(Colors.White);
                     Canvas.SetLeft(number, transformation.getScreenX(i - stepValueX / 5));
                     Canvas.SetTop(number, transformation.getScreenY(yValue - stepValueY / 5));
                     canvas.Children.Add(number);
@@ -420,7 +439,7 @@ namespace EquationDrawerApplication
                 { //Grid Vertical Positivo
                     TextBlock number = new TextBlock();
                     number.Text = i.ToString("#.##");
-                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    number.Foreground = new SolidColorBrush(Colors.White);
                     Canvas.SetLeft(number, transformation.getScreenX(xValue + stepValueX / 4));
                     Canvas.SetTop(number, transformation.getScreenY(i + stepValueY / 5));
                     canvas.Children.Add(number);
@@ -434,7 +453,7 @@ namespace EquationDrawerApplication
                 { //Grid Vertical Positivo
                     TextBlock number = new TextBlock();
                     number.Text = i.ToString("#.##");
-                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    number.Foreground = new SolidColorBrush(Colors.White);
                     Canvas.SetLeft(number, transformation.getScreenX(xValue + stepValueX / 4));
                     Canvas.SetTop(number, transformation.getScreenY(i + stepValueY / 5));
                     canvas.Children.Add(number);
@@ -443,7 +462,7 @@ namespace EquationDrawerApplication
                 { //Grid Vertical Positivo
                     TextBlock number = new TextBlock();
                     number.Text = i.ToString("#.##");
-                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    number.Foreground = new SolidColorBrush(Colors.White);
                     Canvas.SetLeft(number, transformation.getScreenX(xValue + stepValueX / 4));
                     Canvas.SetTop(number, transformation.getScreenY(i + stepValueY / 5));
                     canvas.Children.Add(number);
@@ -455,7 +474,7 @@ namespace EquationDrawerApplication
                 { //Grid Vertical Positivo
                     TextBlock number = new TextBlock();
                     number.Text = i.ToString("#.##");
-                    number.Foreground = new SolidColorBrush(Colors.Black);
+                    number.Foreground = new SolidColorBrush(Colors.White);
                     Canvas.SetLeft(number, transformation.getScreenX(xValue + stepValueX / 4));
                     Canvas.SetTop(number, transformation.getScreenY(i + stepValueY / 5));
                     canvas.Children.Add(number);
@@ -465,20 +484,101 @@ namespace EquationDrawerApplication
 
 
         }
+        private void drawEquations() {
+            Function function;
+            for (int i = 0; i < equations.Count; i++) {
+                if (equations.ElementAt(i).Active){
+                    Polyline polyline = new Polyline();
+                    Equation equation = equations.ElementAt(i);
+                    polyline.Stroke = new SolidColorBrush(equation.Color);
+                    polyline.StrokeThickness = equation.Width;
+                    double x, y, screenX, screenY;
+                    PointCollection points = new PointCollection();
+                    function = new Function("f(x)="+equation.Expression);
+                    for (int j = 0; j < transformation.numPoints; j++)
+                    {
+                        x = transformation.getX(j);  
+                        y = function.calculate(x);
+                        screenX = transformation.getScreenX(x);
+                        screenY = transformation.getScreenY(y);
+                        Point point = new Point(screenX, screenY);
+                        points.Add(point);
+                    }
+                    polyline.Points = points;
+                    canvas.Children.Add(polyline);
+                }
+            }
+        }
 
         //Button Listeners
-        private void onLoadedCanvas(object sender, RoutedEventArgs e) { this.drawChart(); }
-        private void onSizeChanged(object sender, RoutedEventArgs e) { this.drawChart(); }
+        bool isLeftMouseButtonDownOnWindow;
+        Point origMouseDownPoint;
+
+        private void onMouseDown(object sender, MouseButtonEventArgs e) {
+            if (e.ChangedButton == MouseButton.Left) {
+                isLeftMouseButtonDownOnWindow = true;
+                origMouseDownPoint = e.GetPosition(this);
+                Debug.WriteLine("Pressed\n");
+                this.Cursor = Cursors.Hand;
+            }
+        }
+        private void onMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            isLeftMouseButtonDownOnWindow = false;
+            this.Cursor = Cursors.Arrow;
+        }
+        private void onMouseMoved(object sender, MouseEventArgs e)
+        {
+            if (isLeftMouseButtonDownOnWindow){
+                Point current = e.GetPosition(this);
+                Debug.WriteLine("Draggin\n");
+
+                model.drag(origMouseDownPoint, current);
+                canvas.Children.Clear();
+                drawChart();
+                drawEquations();
+
+            }
+        }
+
+        private void onTouchEllipseEvent(object sender, RoutedEventArgs e) {
+        }
+        private void onLoadedCanvas(object sender, RoutedEventArgs e) {
+            this.drawChart(); }
+        private void onSizeChanged(object sender, RoutedEventArgs e) {
+            if(canvas!=null)canvas.Children.Clear();
+            drawChart();
+            drawEquations();
+        }
+        private void functionCheckBoxListener(object sender, RoutedEventArgs e) {
+            canvas.Children.Clear();
+            drawChart();
+            this.drawEquations();
+        }
+        
         private void zoomInButtonListener(object sender, RoutedEventArgs e) {
+            model.zoomIn();
+            canvas.Children.Clear();
+            drawChart();
+            drawEquations();
         }
         private void zoomOutButtonListener(object sender, RoutedEventArgs e){
+            model.zoomOut();
+            canvas.Children.Clear();
+            drawChart();
+            drawEquations();
         }
         private void homeButtonListener(object sender, RoutedEventArgs e){
+            model.goHome();
+            canvas.Children.Clear();
+            drawChart();
+            drawEquations();
         }
         private void personalizeInButtonListener(object sender, RoutedEventArgs e){
             PersonalizeWindow personalizeWindow = new PersonalizeWindow();
             personalizeWindow.OnCheckBoxEventHandler += onCheckBoxChanged;
             personalizeWindow.OnIntervalEventHandler += onIntervalChanged;
+            personalizeWindow.OnSliderChangedEventHandler += sliderChangedListener;
             personalizeWindow.Owner = this;
             personalizeWindow.Show();
         }
@@ -487,9 +587,68 @@ namespace EquationDrawerApplication
             functionWindow.Show();
         }
         private void exportButtonListener(object sender, RoutedEventArgs e){
+
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Image"; // Default file name
+            
+            dlg.DefaultExt = ".png"; // Default file extension
+            dlg.Filter = "PNG|*.png|GIF|*.gif|BMP|*.bmp|JPEG|*.jpg;*.jpeg"; // Filter files by extension
+            
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+                int extension = dlg.FilterIndex;
+                SaveCanvasToFile(this, canvas, 96, filename);
+            }
+
+        }
+        public static void SaveCanvasToFile(Window window, Canvas canvas, int dpi, string filename)
+        {
+            Size size = new Size(canvas.ActualWidth, canvas.ActualHeight);
+            canvas.Measure(size);
+            //canvas.Arrange(new Rect(size));
+
+            var rtb = new RenderTargetBitmap(
+                (int)canvas.ActualWidth, //width
+                (int)canvas.ActualHeight, //height
+                dpi, //dpi x
+                dpi, //dpi y
+                PixelFormats.Pbgra32 // pixelformat
+                );
+            rtb.Render(canvas);
+
+            
+            SaveRTBAsPNGBMP(rtb, filename);
+        }
+
+        private static void SaveRTBAsPNGBMP(RenderTargetBitmap bmp, string filename)
+        {
+            var enc = new System.Windows.Media.Imaging.PngBitmapEncoder();
+            enc.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bmp));
+
+            using (var stm = System.IO.File.Create(filename))
+            {
+                enc.Save(stm);
+            }
+        }
+        private static void SaveRTBAsJPEG(RenderTargetBitmap bmp, string filename)
+        {
+            var enc = new System.Windows.Media.Imaging.JpegBitmapEncoder();
+            enc.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bmp));
+
+            using (var stm = System.IO.File.Create(filename))
+            {
+                enc.Save(stm);
+            }
         }
 
 
-       
+
     }
 }
