@@ -24,7 +24,7 @@ namespace EquationDrawerApplication
             minScreenY = 0;
             maxScreenX = canvas.ActualWidth;
             maxScreenY = canvas.ActualHeight;
-            numPoints = canvas.ActualWidth;
+            numPoints = 10*canvas.ActualWidth;
         }
 
         public void setInterval(double minX, double maxX, double minY, double maxY)

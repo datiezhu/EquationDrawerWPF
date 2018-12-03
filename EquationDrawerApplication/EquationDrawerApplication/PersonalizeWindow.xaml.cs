@@ -23,6 +23,7 @@ namespace EquationDrawerApplication
     public delegate void OnCheckBoxEventHandler(object sender, EventArgs args);
     public delegate void OnIntervalEventHandler(object sender, EventArgs args);
     public delegate void OnSliderChangedEventHandler(object sender, EventArgs args);
+    public delegate void OnSelectedColorEventHandler(object sender, EventArgs args);
     public partial class PersonalizeWindow : Window
     {
 
@@ -31,6 +32,7 @@ namespace EquationDrawerApplication
         public event OnCheckBoxEventHandler OnCheckBoxEventHandler;
         public event OnIntervalEventHandler OnIntervalEventHandler;
         public event OnSliderChangedEventHandler OnSliderChangedEventHandler;
+        public event OnSelectedColorEventHandler OnSelectedColorEventHandler;
         public PersonalizeWindow()
         {
             InitializeComponent();
@@ -43,6 +45,12 @@ namespace EquationDrawerApplication
 
         }
 
+        protected virtual void onSelectedColorEventHandler(EventArgs args) {
+            if (this.OnSelectedColorEventHandler != null) this.OnSelectedColorEventHandler(this, args);
+        }
+        private void selecterColorListener(object sender, RoutedEventArgs args) {
+            onSelectedColorEventHandler(null);
+        }
 
 
         protected virtual void onSliderChangedEventHandler(EventArgs args)

@@ -82,10 +82,11 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 
                 <Label Content="Funciones" Margin="5,5,5,5" HorizontalAlignment="Center"/>
-                <ListView Name="equationsListView" Grid.Row="3" Margin="5" DataContext="{Binding Mode=OneWay, Source={StaticResource ViewModelBase}}" ItemsSource="{Binding}" Background="Transparent" Foreground="#FFB0B0B0" BorderBrush="Transparent">
+                <ListView Name="equationsListView" Grid.Row="1" Margin="5" DataContext="{Binding Mode=OneWay, Source={StaticResource ViewModelBase}}" ItemsSource="{Binding}" Background="Transparent" Foreground="#FFB0B0B0" BorderBrush="Transparent">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
                             <Setter Property="Background" Value="Transparent" />
@@ -105,6 +106,7 @@
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <CheckBox Checked="functionCheckBoxListener" Unchecked="functionCheckBoxListener" Grid.Column="0" IsChecked="{Binding Active}"/>
@@ -116,15 +118,23 @@
                                         </ControlTemplate>
                                     </Button.Template>
                                 </Button>
-                                
+
+                                <Button BorderThickness="0" Grid.Column="3" Margin="0,-10,5,0" Name="zoomOutButton" 
+                                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"  Command="{Binding deleteFunctionCommand, Source={StaticResource ViewModelBase}}" CommandParameter="{Binding}">
+                                    <StackPanel Orientation="Vertical">
+                                        <Image  Width="20" Height="20" Source="resources/close.png" />
+                                    </StackPanel>
+                                </Button>
+
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                     
                 </ListView>
-
+                
             </Grid>
-            
+
+
             
 
             <Canvas MouseMove="onMouseMoved" MouseDown="onMouseDown" MouseUp="onMouseUp" ClipToBounds="True" Name="myCanvas" Grid.Column="1" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">

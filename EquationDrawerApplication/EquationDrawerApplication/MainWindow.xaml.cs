@@ -104,11 +104,18 @@ namespace EquationDrawerApplication
             drawEquations();
         }
 
-        void sliderChangedListener(object sender, EventArgs args)
+        void onSliderChanged(object sender, EventArgs args)
         {
             canvas.Children.Clear();
             drawChart();
             drawEquations();
+        }
+        void onSelectedColorChanged(object sender, EventArgs args)
+        {
+            canvas.Children.Clear();
+            drawChart();
+            drawEquations();
+
         }
 
         //Draw Methods
@@ -578,7 +585,8 @@ namespace EquationDrawerApplication
             PersonalizeWindow personalizeWindow = new PersonalizeWindow();
             personalizeWindow.OnCheckBoxEventHandler += onCheckBoxChanged;
             personalizeWindow.OnIntervalEventHandler += onIntervalChanged;
-            personalizeWindow.OnSliderChangedEventHandler += sliderChangedListener;
+            personalizeWindow.OnSliderChangedEventHandler += onSliderChanged;
+            personalizeWindow.OnSelectedColorEventHandler += onSelectedColorChanged;
             personalizeWindow.Owner = this;
             personalizeWindow.Show();
         }
@@ -652,3 +660,9 @@ namespace EquationDrawerApplication
 
     }
 }
+
+/*
+ * 
+ * 
+ * WindowClosed----- Application.Current.Shutdowm
+ * */

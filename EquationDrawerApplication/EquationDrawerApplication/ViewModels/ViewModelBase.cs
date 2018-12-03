@@ -18,8 +18,10 @@ namespace EquationDrawerApplication.ViewModels
     public class ViewModelBase : ObservableCollection<Equation>
     {
         public AddFunctionCommand addFunctionCommand { get; set; }
+        public DeleteFunctionCommand deleteFunctionCommand { get; set; }
         public ViewModelBase() {
             this.addFunctionCommand = new AddFunctionCommand(this);
+            this.deleteFunctionCommand = new DeleteFunctionCommand(this);
             //for (int i = 0; i < 5; i++)
             //{
             //    Add(new Equation()
@@ -33,6 +35,9 @@ namespace EquationDrawerApplication.ViewModels
 
         }
 
+        public void removeFunction(Equation e) {
+            RemoveItem(IndexOf(e));
+        }
 
         public void addFunction(Equation equation) {
             Equation eq = new Equation();
