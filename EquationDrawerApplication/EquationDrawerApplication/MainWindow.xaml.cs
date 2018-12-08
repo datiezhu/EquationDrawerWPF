@@ -34,6 +34,7 @@ namespace EquationDrawerApplication
         private Transformation transformation;
         private Data model;
         private ViewModelBase equations;
+        private bool isPointer, isDrag, isRect; 
         //private Model model;
 
         //Delegates
@@ -522,7 +523,7 @@ namespace EquationDrawerApplication
         Point origMouseDownPoint;
 
         private void onMouseDown(object sender, MouseButtonEventArgs e) {
-            if (e.ChangedButton == MouseButton.Left) {
+            if (e.ChangedButton == MouseButton.Left && isDrag) {
                 isLeftMouseButtonDownOnWindow = true;
                 origMouseDownPoint = e.GetPosition(this);
                 Debug.WriteLine("Pressed\n");
@@ -656,8 +657,23 @@ namespace EquationDrawerApplication
             }
         }
 
+        private void onDifferentCursorListener(object sender, RoutedEventArgs e)
+        {
+            isPointer = isRect = isDrag = false;
+            switch((sender as Button).Name)
+            {
+                case "pointerButton":
+                    isPointer = true;
+                    break;
+                case "dragButton":
+                    isDrag = true;
+                    break;
+                case "rectButton":
+                    isRect = true;
+                    break;
 
-
+            }
+        }
     }
 }
 
