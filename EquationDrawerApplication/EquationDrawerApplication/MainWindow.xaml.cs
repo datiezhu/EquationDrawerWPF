@@ -244,9 +244,6 @@ namespace EquationDrawerApplication
             }
         }
 
-
-
-        
         private void drawTicks() {
             double xMin, xMax, yMin, yMax, stepValueX, stepValueY, width, height;
             double widthScreen, heightScreen;
@@ -517,35 +514,88 @@ namespace EquationDrawerApplication
                 }
             }
         }
+        
+        bool isLeftMouseButtonDownOnWindow,dragging=false;
+        Point origMouseDownPoint, endMouseDownPoint;
+        private Rectangle getRectangle()
+        {
+            Rectangle rect = new Rectangle()
+            {
+                Stroke = Brushes.PaleVioletRed,
+                Fill = Brushes.PaleVioletRed,
+                StrokeThickness = 2
+            };
+            
+            rect.Width = Math.Abs(origMouseDownPoint.X - endMouseDownPoint.X);
+            rect.Height = Math.Abs(origMouseDownPoint.Y - endMouseDownPoint.Y);
+            Canvas.SetLeft(rect, Math.Min(origMouseDownPoint.X, endMouseDownPoint.X));
+            Canvas.SetTop(rect, Math.Min(origMouseDownPoint.Y, endMouseDownPoint.Y));
+            return rect;
+        }
 
-        //Button Listeners
-        bool isLeftMouseButtonDownOnWindow;
-        Point origMouseDownPoint;
-
+        
         private void onMouseDown(object sender, MouseButtonEventArgs e) {
+            (sender as Canvas).CaptureMouse();
             if (e.ChangedButton == MouseButton.Left && isDrag) {
                 isLeftMouseButtonDownOnWindow = true;
-                origMouseDownPoint = e.GetPosition(this);
-                Debug.WriteLine("Pressed\n");
+                origMouseDownPoint = e.GetPosition(myCanvas);
                 this.Cursor = Cursors.Hand;
+            }else if(e.ChangedButton == MouseButton.Left && isRect)
+            {
+                origMouseDownPoint = endMouseDownPoint= e.GetPosition(myCanvas);
+                dragging = true;
             }
         }
         private void onMouseUp(object sender, MouseButtonEventArgs e)
         {
+            (sender as Canvas).ReleaseMouseCapture();
             isLeftMouseButtonDownOnWindow = false;
+            dragging = false;
             this.Cursor = Cursors.Arrow;
+            Debug.WriteLine("dsfdsfdsf: "+isRect);
+            if (isRect)
+            {
+               
+                endMouseDownPoint = e.GetPosition(myCanvas);
+                Point startScreen, endScreen;
+                startScreen = new Point();
+                endScreen = new Point();
+
+                startScreen.X = transformation.getX(origMouseDownPoint.X);
+                startScreen.Y = transformation.getY(origMouseDownPoint.Y);
+                endScreen.X = transformation.getX(endMouseDownPoint.X);
+                endScreen.Y = transformation.getY(endMouseDownPoint.Y);
+
+
+                Debug.WriteLine("START--- X: " + startScreen.X + " , Y: " + startScreen.Y);
+                Debug.WriteLine("END--- X: " + startScreen.X + " , Y: " + endScreen.Y);
+
+                model.resize(startScreen, endScreen);
+                canvas.Children.Clear();
+                drawChart();
+                drawEquations();
+            }
+
         }
         private void onMouseMoved(object sender, MouseEventArgs e)
         {
-            if (isLeftMouseButtonDownOnWindow){
-                Point current = e.GetPosition(this);
-                Debug.WriteLine("Draggin\n");
+            if (isLeftMouseButtonDownOnWindow && isDrag){
+                Point current = e.GetPosition(myCanvas);
+                //Debug.WriteLine("Draggin\n");
 
                 model.drag(origMouseDownPoint, current);
                 canvas.Children.Clear();
                 drawChart();
                 drawEquations();
 
+            }else if(isRect && dragging)
+            {
+                endMouseDownPoint = e.GetPosition(myCanvas);
+                //Debug.WriteLine("Draggin\n");
+                if (canvas != null) canvas.Children.Clear();
+                drawChart();
+                drawEquations();
+                myCanvas.Children.Add(getRectangle());
             }
         }
 

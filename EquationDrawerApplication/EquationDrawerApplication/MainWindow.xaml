@@ -145,8 +145,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Canvas MouseMove="onMouseMoved" MouseDown="onMouseDown" MouseUp="onMouseUp" ClipToBounds="True" Name="myCanvas" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
-
+                <Canvas MouseMove="onMouseMoved" MouseLeftButtonDown="onMouseDown" PreviewMouseUp="onMouseUp" MouseLeftButtonUp="onMouseUp" ClipToBounds="True" Name="myCanvas" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
+                    
                 </Canvas>
                 <StackPanel Grid.Column="1" Grid.Row="1" Margin="15" Orientation="Horizontal">
                     <Button Name="pointerButton" Click="onDifferentCursorListener">

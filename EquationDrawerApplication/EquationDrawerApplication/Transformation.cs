@@ -40,6 +40,11 @@ namespace EquationDrawerApplication
             return minX + x * (maxX - minX) / numPoints;
         }
 
+        public double getY(double y)
+        {
+            return minY + y * (maxY - minY) / maxScreenY;
+        }
+
         public double getScreenX(double x)
         {
             return (maxScreenX - minScreenX) * (x - minX) / (maxX - minX) + minScreenX;

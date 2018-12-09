@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace EquationDrawerApplication.Models
 {
@@ -103,6 +104,14 @@ namespace EquationDrawerApplication.Models
             minY /= 2;
             maxX /= 2;
             maxY /= 2;
+        }
+
+        public void resize(Point start, Point end)
+        {
+            maxX = Math.Abs(start.X - end.X);
+            maxY = Math.Abs(start.Y - end.Y);
+            minX=Math.Min(start.X, end.X);
+            minY=Math.Min(start.Y, end.Y);
         }
         public void drag(Point start, Point end) {
             Debug.WriteLine("Xmin: " + minX + "Xmax: " + maxX + "Ymin: " + minY + "Ymax: " + maxY);
