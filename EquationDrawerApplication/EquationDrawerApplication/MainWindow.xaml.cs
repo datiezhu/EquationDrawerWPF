@@ -521,8 +521,8 @@ namespace EquationDrawerApplication
         {
             Rectangle rect = new Rectangle()
             {
-                Stroke = Brushes.PaleVioletRed,
-                Fill = Brushes.PaleVioletRed,
+                Stroke = new SolidColorBrush(Color.FromArgb(150, 237, 59, 109)),
+                Fill = new SolidColorBrush(Color.FromArgb(150, 237, 59, 109)),
                 StrokeThickness = 2
             };
             
@@ -552,7 +552,7 @@ namespace EquationDrawerApplication
             isLeftMouseButtonDownOnWindow = false;
             dragging = false;
             this.Cursor = Cursors.Arrow;
-            Debug.WriteLine("dsfdsfdsf: "+isRect);
+            //Debug.WriteLine("dsfdsfdsf: "+isRect);
             if (isRect)
             {
                
@@ -566,9 +566,10 @@ namespace EquationDrawerApplication
                 endScreen.X = transformation.getX(endMouseDownPoint.X);
                 endScreen.Y = transformation.getY(endMouseDownPoint.Y);
 
-
+                Debug.WriteLine("START PANT--- X: " + origMouseDownPoint.X + " , Y: " + origMouseDownPoint.Y);
+                Debug.WriteLine("END PANT--- X: " + endMouseDownPoint.X + " , Y: " + endMouseDownPoint.Y);
                 Debug.WriteLine("START--- X: " + startScreen.X + " , Y: " + startScreen.Y);
-                Debug.WriteLine("END--- X: " + startScreen.X + " , Y: " + endScreen.Y);
+                Debug.WriteLine("END--- X: " + endScreen.X + " , Y: " + endScreen.Y);
 
                 model.resize(startScreen, endScreen);
                 canvas.Children.Clear();
@@ -598,6 +599,31 @@ namespace EquationDrawerApplication
                 myCanvas.Children.Add(getRectangle());
             }
         }
+        private void MyCanvas_MouseEnter(object sender, MouseEventArgs e)
+        {
+            buttonStackPanel.Visibility = Visibility.Visible;
+            if(isRect) this.Cursor = Cursors.Cross;
+            if (isDrag) this.Cursor = Cursors.Hand;
+            if(isPointer) this.Cursor = Cursors.Arrow;
+
+
+        }
+        private void MyCanvas_MouseLeave(object sender, MouseEventArgs e)
+        {
+            buttonStackPanel.Visibility = Visibility.Collapsed;
+            this.Cursor = Cursors.Arrow;
+
+        }
+        private void MyStack_MouseEnter(object sender, MouseEventArgs e)
+        {
+            buttonStackPanel.Visibility = Visibility.Visible;
+        }
+        private void MyStack_MouseLeave(object sender, MouseEventArgs e)
+        {
+            //buttonStackPanel.Visibility = Visibility.Hidden;
+        }
+
+
 
         private void onTouchEllipseEvent(object sender, RoutedEventArgs e) {
         }
@@ -663,63 +689,74 @@ namespace EquationDrawerApplication
                 // Save document
                 string filename = dlg.FileName;
                 int extension = dlg.FilterIndex;
-                SaveCanvasToFile(this, canvas, 96, filename);
+
+                Rect bounds = VisualTreeHelper.GetDescendantBounds(myCanvas);
+                double dpi = 96d;
+
+
+                RenderTargetBitmap rtb = new RenderTargetBitmap((int)bounds.Width, (int)bounds.Height, dpi, dpi, System.Windows.Media.PixelFormats.Default);
+
+
+                DrawingVisual dv = new DrawingVisual();
+                using (DrawingContext dc = dv.RenderOpen())
+                {
+                    VisualBrush vb = new VisualBrush(myCanvas);
+                    dc.DrawRectangle(vb, null, new Rect(new Point(), bounds.Size));
+                }
+
+                rtb.Render(dv);
+
+                BitmapEncoder pngEncoder = new PngBitmapEncoder();
+                pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+
+                try
+                {
+                    System.IO.MemoryStream ms = new System.IO.MemoryStream();
+
+                    pngEncoder.Save(ms);
+                    ms.Close();
+
+                    System.IO.File.WriteAllBytes(filename, ms.ToArray());
+                }
+                catch (Exception err)
+                {
+                    System.Windows.MessageBox.Show(err.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                //SaveCanvasToFile(this, canvas, 96, filename);
             }
 
         }
-        public static void SaveCanvasToFile(Window window, Canvas canvas, int dpi, string filename)
-        {
-            Size size = new Size(canvas.ActualWidth, canvas.ActualHeight);
-            canvas.Measure(size);
-            //canvas.Arrange(new Rect(size));
 
-            var rtb = new RenderTargetBitmap(
-                (int)canvas.ActualWidth, //width
-                (int)canvas.ActualHeight, //height
-                dpi, //dpi x
-                dpi, //dpi y
-                PixelFormats.Pbgra32 // pixelformat
-                );
-            rtb.Render(canvas);
+        
 
-            
-            SaveRTBAsPNGBMP(rtb, filename);
-        }
+        
 
-        private static void SaveRTBAsPNGBMP(RenderTargetBitmap bmp, string filename)
-        {
-            var enc = new System.Windows.Media.Imaging.PngBitmapEncoder();
-            enc.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bmp));
-
-            using (var stm = System.IO.File.Create(filename))
-            {
-                enc.Save(stm);
-            }
-        }
-        private static void SaveRTBAsJPEG(RenderTargetBitmap bmp, string filename)
-        {
-            var enc = new System.Windows.Media.Imaging.JpegBitmapEncoder();
-            enc.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bmp));
-
-            using (var stm = System.IO.File.Create(filename))
-            {
-                enc.Save(stm);
-            }
-        }
+       
 
         private void onDifferentCursorListener(object sender, RoutedEventArgs e)
         {
+            if(isPointer)cursorImage.Source = new BitmapImage((new Uri("resources/cursor.png", UriKind.Relative)));
+            if(isDrag)moveImage.Source = new BitmapImage((new Uri("resources/move.png", UriKind.Relative)));
+            if(isRect)rectImage.Source = new BitmapImage((new Uri("resources/zoomRectt.png", UriKind.Relative)));
             isPointer = isRect = isDrag = false;
-            switch((sender as Button).Name)
+
+            switch ((sender as Button).Name)
             {
                 case "pointerButton":
                     isPointer = true;
+                    cursorImage.Source = new BitmapImage((new Uri("resources/cursorPressed.png", UriKind.Relative)));
+                    this.Cursor = Cursors.Arrow;
                     break;
                 case "dragButton":
                     isDrag = true;
+                    this.Cursor = Cursors.Hand;
+                    moveImage.Source = new BitmapImage((new Uri("resources/movePressed.png", UriKind.Relative)));
                     break;
                 case "rectButton":
                     isRect = true;
+                    this.Cursor = Cursors.Cross;
+                    rectImage.Source = new BitmapImage((new Uri("resources/zoomRectPressed.png", UriKind.Relative)));
                     break;
 
             }

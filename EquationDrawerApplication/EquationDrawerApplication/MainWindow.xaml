@@ -20,48 +20,41 @@
         <StackPanel DockPanel.Dock="Top">
             <ToolBar ToolBarTray.IsLocked="True" DockPanel.Dock="Top" HorizontalAlignment="Center" Background="#FF181818" Loaded="ToolBar_Loaded">
                
-                <Button Name="zoomOutButton" ToolTip="Create a new file" Click="zoomOutButtonListener">
+                <Button Name="zoomOutButton" Click="zoomOutButtonListener">
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/zoomOut.png" />
-                        <Label Content="Zoom Out"/>
+                        <Label Content="Quitar zoom"/>
                     </StackPanel>
                 </Button>
                 <Button Name="zoomInButton" Click="zoomInButtonListener">
-                    <Button.ToolTip>
-                        <StackPanel>
-                            <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5"><Run Text="Open file"/></TextBlock>
-                            <TextBlock><Run Text="Search your computer or local network"/><LineBreak /><Run Text="for a file and open it for editing."/></TextBlock>
-                            <Border BorderBrush="Silver" BorderThickness="0,1,0,0" Margin="0,8" />
-
-                        </StackPanel>
-                    </Button.ToolTip>
+                    
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/zoomIn.png" />
-                        <Label Content="Zoom In"/>
+                        <Label Content="Hacer zoom"/>
                     </StackPanel>
                 </Button>
-                <Button ToolTip="Create a new file" Name="homeButton" Click="homeButtonListener">
+                <Button ToolTip="Centrar ejes de coordendasa" Name="homeButton" Click="homeButtonListener">
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/axisHome.png" />
-                        <Label Content="Home"/>
+                        <Label Content="Centrar"/>
                     </StackPanel>
                 </Button>
-                <Button ToolTip="Create a new file" Name="functionButton" Click="functionsButtonListener">
+                <Button ToolTip="Añadir nuevas funciones o ecuaciones a la gráfica" Name="functionButton" Click="functionsButtonListener">
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/functions.png" />
                         <Label Content="Funciones"/>
                     </StackPanel>
                 </Button>
-                <Button ToolTip="Create a new file" Click="personalizeInButtonListener" Name="personalizeButton">
+                <Button ToolTip="Personalizar parámetros de cada gráfica así como parámetros de representación" Click="personalizeInButtonListener" Name="personalizeButton">
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/customize.png" />
                         <Label Content="Personalizar"/>
                     </StackPanel>
                 </Button>
-                <Button ToolTip="Create a new file" Name="exportButton" Click="exportButtonListener">
+                <Button  Name="exportButton" Click="exportButtonListener">
                     <StackPanel Orientation="Vertical">
                         <Image  Width="36" Height="36" Source="resources/save.png" />
-                        <Label Content="Expoortar imagen"/>
+                        <Label Content="Exportar imagen"/>
                     </StackPanel>
                 </Button>
             </ToolBar>
@@ -145,18 +138,18 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Canvas MouseMove="onMouseMoved" MouseLeftButtonDown="onMouseDown" PreviewMouseUp="onMouseUp" MouseLeftButtonUp="onMouseUp" ClipToBounds="True" Name="myCanvas" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
+                <Canvas MouseEnter="MyCanvas_MouseEnter" MouseLeave="MyCanvas_MouseLeave" MouseMove="onMouseMoved" MouseLeftButtonDown="onMouseDown" PreviewMouseUp="onMouseUp" MouseLeftButtonUp="onMouseUp" ClipToBounds="True" Name="myCanvas" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
                     
                 </Canvas>
-                <StackPanel Grid.Column="1" Grid.Row="1" Margin="15" Orientation="Horizontal">
+                <StackPanel MouseEnter="MyStack_MouseEnter" MouseLeave="MyStack_MouseLeave" Name="buttonStackPanel" Grid.Column="1" Grid.Row="1" Margin="15"  Orientation="Horizontal">
                     <Button Name="pointerButton" Click="onDifferentCursorListener">
-                        <Image Width="26" Source="resources/cursor.png" />
+                        <Image Name="cursorImage" Width="26" Source="resources/cursor.png" />
                     </Button>
                     <Button Name="dragButton" Click="onDifferentCursorListener">
-                        <Image Width="26" Source="resources/move.png" />
+                        <Image Name="moveImage" Width="26" Source="resources/move.png" />
                     </Button>
                     <Button Name="rectButton" Click="onDifferentCursorListener">
-                        <Image  Width="26" Source="resources/cursor.png" />
+                        <Image Name="rectImage" Width="26" Source="resources/zoomRectt.png" />
                     </Button>
                 </StackPanel>
             </Grid>

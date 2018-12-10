@@ -108,8 +108,8 @@ namespace EquationDrawerApplication.Models
 
         public void resize(Point start, Point end)
         {
-            maxX = Math.Abs(start.X - end.X);
-            maxY = Math.Abs(start.Y - end.Y);
+            maxX = Math.Max(start.X , end.X);
+            maxY = Math.Max(start.Y , end.Y);
             minX=Math.Min(start.X, end.X);
             minY=Math.Min(start.Y, end.Y);
         }

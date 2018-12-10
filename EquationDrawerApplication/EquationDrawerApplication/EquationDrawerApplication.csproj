@@ -189,5 +189,20 @@
   <ItemGroup>
     <Resource Include="resources\move.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\zoomRect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\zoomRectt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\zoomRectPressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\movePressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\cursorPressed.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
