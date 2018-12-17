@@ -11,7 +11,6 @@
 
     <Window.Resources>
         <converters:BackgroundColorConverter x:Key="BackgroundColorConverter"/>
-        <equations:ViewModelBase x:Key="equations" />
         <converters:BackgroundColorConverter x:Key="converter" />
     </Window.Resources>
 
@@ -112,7 +111,7 @@
                                     </Button.Template>
                                 </Button>
 
-                                <Button BorderThickness="0" Grid.Column="3" Margin="0,-10,5,0" Name="zoomOutButton" 
+                                <Button BorderThickness="0" Grid.Column="3" Margin="0,-10,5,0" Name="zoomOutButton"
                                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"  Command="{Binding deleteFunctionCommand, Source={StaticResource ViewModelBase}}" CommandParameter="{Binding}">
                                     <StackPanel Orientation="Vertical">
                                         <Image  Width="20" Height="20" Source="resources/close.png" />
@@ -143,7 +142,7 @@
                 </Canvas>
                 <StackPanel MouseEnter="MyStack_MouseEnter" MouseLeave="MyStack_MouseLeave" Name="buttonStackPanel" Grid.Column="1" Grid.Row="1" Margin="15"  Orientation="Horizontal">
                     <Button Name="pointerButton" Click="onDifferentCursorListener">
-                        <Image Name="cursorImage" Width="26" Source="resources/cursor.png" />
+                        <Image Name="cursorImage" Width="26" Source="resources/cursorPressed.png" />
                     </Button>
                     <Button Name="dragButton" Click="onDifferentCursorListener">
                         <Image Name="moveImage" Width="26" Source="resources/move.png" />

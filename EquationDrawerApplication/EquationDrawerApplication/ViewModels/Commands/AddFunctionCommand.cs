@@ -36,6 +36,8 @@ namespace EquationDrawerApplication.ViewModels.Commands
                 
                 if (!e.checkSyntax() || String.IsNullOrEmpty(equation.Name))
                     return false;
+
+
                 return true;
             }
             return false;

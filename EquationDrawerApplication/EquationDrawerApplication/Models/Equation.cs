@@ -48,11 +48,12 @@ namespace EquationDrawerApplication.Model
 
 
         public Equation() {
-            Name="";
+            Random random = new Random();
+            Name="Funcion";
             Expression ="";
             Active = false;
             Width = 3;
-            Color = Color.FromRgb(255, 255, 0);
+            Color = Color.FromRgb((byte)random.Next(0,256), (byte)random.Next(0, 256), (byte)random.Next(0, 256));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

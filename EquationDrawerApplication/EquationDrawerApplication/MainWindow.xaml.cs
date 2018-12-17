@@ -34,7 +34,7 @@ namespace EquationDrawerApplication
         private Transformation transformation;
         private Data model;
         private ViewModelBase equations;
-        private bool isPointer, isDrag, isRect; 
+        private bool isPointer=true, isDrag, isRect; 
         //private Model model;
 
         //Delegates
@@ -45,13 +45,22 @@ namespace EquationDrawerApplication
             InitializeComponent();
             model = Application.Current.Resources["model"] as Data;
             equations = Application.Current.Resources["ViewModelBase"] as ViewModelBase;
+            equations.CollectionChanged += this.OnCollectionChanged;
             //DataContext = viewModel;
             //  model = new Model();
         }
 
 
+        void OnCollectionChanged(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Holaaaa");
+            canvas.Children.Clear();
 
-       
+            drawChart();
+            drawEquations();
+        }
+
+
 
 
         void eventHandler(object sender, EventArgs args) {
@@ -491,6 +500,7 @@ namespace EquationDrawerApplication
         }
         private void drawEquations() {
             Function function;
+            Point previous= new Point(0,0);
             for (int i = 0; i < equations.Count; i++) {
                 if (equations.ElementAt(i).Active){
                     Polyline polyline = new Polyline();
@@ -504,17 +514,39 @@ namespace EquationDrawerApplication
                     {
                         x = transformation.getX(j);  
                         y = function.calculate(x);
-                        screenX = transformation.getScreenX(x);
-                        screenY = transformation.getScreenY(y);
-                        Point point = new Point(screenX, screenY);
-                        points.Add(point);
+                        //Debug.WriteLine("X: "+x+"___Y: "+y);
+                        if (!Double.IsNaN(y)) {
+                            //Debug.WriteLine("He entrado Y: "+y);
+                            if ((previous.Y < 0 && y > 0) || (previous.Y > 0 && y < 0))
+                            {
+                                //for (int k = 0; k < points.Count; k++)
+                                //    polyline.Points.Add(points.ElementAt(k));
+
+
+                                points.Clear();
+                                polyline = new Polyline();
+                                polyline.Stroke = new SolidColorBrush(equation.Color);
+                                polyline.StrokeThickness = equation.Width;
+                                previous = new Point(x, y);
+                            }
+                            else
+                            {
+                                screenX = transformation.getScreenX(x);
+                                screenY = transformation.getScreenY(y);
+                                Point point = new Point(screenX, screenY);
+                                previous = new Point(x, y);
+                                polyline.Points.Add(point);
+                            }
+                        }
                     }
-                    polyline.Points = points;
+                    //polyline.Points = points;
                     canvas.Children.Add(polyline);
                 }
             }
+            Debug.WriteLine("Done EQ");
+
         }
-        
+
         bool isLeftMouseButtonDownOnWindow,dragging=false;
         Point origMouseDownPoint, endMouseDownPoint;
         private Rectangle getRectangle()
@@ -566,10 +598,10 @@ namespace EquationDrawerApplication
                 endScreen.X = transformation.getX(endMouseDownPoint.X);
                 endScreen.Y = transformation.getY(endMouseDownPoint.Y);
 
-                Debug.WriteLine("START PANT--- X: " + origMouseDownPoint.X + " , Y: " + origMouseDownPoint.Y);
+                /*Debug.WriteLine("START PANT--- X: " + origMouseDownPoint.X + " , Y: " + origMouseDownPoint.Y);
                 Debug.WriteLine("END PANT--- X: " + endMouseDownPoint.X + " , Y: " + endMouseDownPoint.Y);
                 Debug.WriteLine("START--- X: " + startScreen.X + " , Y: " + startScreen.Y);
-                Debug.WriteLine("END--- X: " + endScreen.X + " , Y: " + endScreen.Y);
+                Debug.WriteLine("END--- X: " + endScreen.X + " , Y: " + endScreen.Y);*/
 
                 model.resize(startScreen, endScreen);
                 canvas.Children.Clear();
@@ -658,6 +690,9 @@ namespace EquationDrawerApplication
             drawChart();
             drawEquations();
         }
+
+        
+
         private void personalizeInButtonListener(object sender, RoutedEventArgs e){
             PersonalizeWindow personalizeWindow = new PersonalizeWindow();
             personalizeWindow.OnCheckBoxEventHandler += onCheckBoxChanged;
@@ -674,7 +709,7 @@ namespace EquationDrawerApplication
         private void exportButtonListener(object sender, RoutedEventArgs e){
 
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = "Image"; // Default file name
+            dlg.FileName = "Grafica_"+DateTime.Today.ToString("dd_MM_yyyy_") + DateTime.Now.ToString("HH:mm:ss"); // Default file name
             
             dlg.DefaultExt = ".png"; // Default file extension
             dlg.Filter = "PNG|*.png|GIF|*.gif|BMP|*.bmp|JPEG|*.jpg;*.jpeg"; // Filter files by extension

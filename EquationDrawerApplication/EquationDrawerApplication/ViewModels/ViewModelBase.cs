@@ -37,6 +37,7 @@ namespace EquationDrawerApplication.ViewModels
 
         public void removeFunction(Equation e) {
             RemoveItem(IndexOf(e));
+            Debug.WriteLine("Done");
         }
 
         public void addFunction(Equation equation) {
