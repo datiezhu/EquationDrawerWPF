@@ -514,19 +514,16 @@ namespace EquationDrawerApplication
                     {
                         x = transformation.getX(j);  
                         y = function.calculate(x);
-                        //Debug.WriteLine("X: "+x+"___Y: "+y);
                         if (!Double.IsNaN(y)) {
-                            //Debug.WriteLine("He entrado Y: "+y);
-                            if ((previous.Y < 0 && y > 0) || (previous.Y > 0 && y < 0))
+                            if (((previous.Y < 0 && y > 0) && (y- previous.Y) >1) || ((previous.Y > 0 && y < 0) && (previous.Y - y) > 1))
                             {
-                                //for (int k = 0; k < points.Count; k++)
-                                //    polyline.Points.Add(points.ElementAt(k));
-
-
-                                points.Clear();
+                 
+                                polyline.Points = points;
+                                canvas.Children.Add(polyline);
                                 polyline = new Polyline();
                                 polyline.Stroke = new SolidColorBrush(equation.Color);
                                 polyline.StrokeThickness = equation.Width;
+                                points = new PointCollection();
                                 previous = new Point(x, y);
                             }
                             else
@@ -535,15 +532,14 @@ namespace EquationDrawerApplication
                                 screenY = transformation.getScreenY(y);
                                 Point point = new Point(screenX, screenY);
                                 previous = new Point(x, y);
-                                polyline.Points.Add(point);
+                                points.Add(point);
                             }
                         }
                     }
-                    //polyline.Points = points;
+                    polyline.Points = points;
                     canvas.Children.Add(polyline);
                 }
             }
-            Debug.WriteLine("Done EQ");
 
         }
 
