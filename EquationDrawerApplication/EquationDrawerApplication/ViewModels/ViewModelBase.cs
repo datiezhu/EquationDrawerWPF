@@ -19,9 +19,12 @@ namespace EquationDrawerApplication.ViewModels
     {
         public AddFunctionCommand addFunctionCommand { get; set; }
         public DeleteFunctionCommand deleteFunctionCommand { get; set; }
+        public PersonalizeViewsEnabledCommand personalizeViewsEnabledCommand { get; set; }
+
         public ViewModelBase() {
             this.addFunctionCommand = new AddFunctionCommand(this);
             this.deleteFunctionCommand = new DeleteFunctionCommand(this);
+            this.personalizeViewsEnabledCommand = new PersonalizeViewsEnabledCommand(this);
             //for (int i = 0; i < 5; i++)
             //{
             //    Add(new Equation()

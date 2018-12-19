@@ -85,6 +85,7 @@
     <Compile Include="ViewModels\Commands\AddFunctionCommand.cs" />
     <Compile Include="ViewModels\Commands\checkBoxCommand.cs" />
     <Compile Include="ViewModels\Commands\DeleteFunctionCommand.cs" />
+    <Compile Include="ViewModels\Commands\PersonalizeViewsEnabledCommand.cs" />
     <Compile Include="ViewModels\Converter\BackgroundColorConverter.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelPersonalize.cs" />

@@ -43,6 +43,10 @@ namespace EquationDrawerApplication
         {
             Equation equation = ((sender as ListView).SelectedItem as Equation);
 
+
+
+
+
         }
 
         protected virtual void onSelectedColorEventHandler(EventArgs args) {

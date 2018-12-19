@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 namespace EquationDrawerApplication
 {
@@ -39,10 +40,18 @@ namespace EquationDrawerApplication
         {
             return minX + x * (maxX - minX) / numPoints;
         }
+        public double getX(Point current)
+        {
+            return minX + current.X * (maxX - minX) / numPoints;
+        }
 
         public double getY(double y)
         {
             return -(minY + y * (maxY - minY) / maxScreenY);
+        }
+        public double getY(Point current)
+        {
+            return -(minY + current.Y * (maxY - minY) / maxScreenY);
         }
 
         public double getScreenX(double x)

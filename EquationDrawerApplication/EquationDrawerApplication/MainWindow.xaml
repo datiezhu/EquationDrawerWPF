@@ -134,13 +134,20 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Canvas MouseEnter="MyCanvas_MouseEnter" MouseLeave="MyCanvas_MouseLeave" MouseMove="onMouseMoved" MouseLeftButtonDown="onMouseDown" PreviewMouseUp="onMouseUp" MouseLeftButtonUp="onMouseUp" ClipToBounds="True" Name="myCanvas" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
+                <Canvas MouseEnter="MyCanvas_MouseEnter" MouseLeave="MyCanvas_MouseLeave" MouseMove="onMouseMoved" MouseLeftButtonDown="onMouseDown" PreviewMouseUp="onMouseUp" MouseLeftButtonUp="onMouseUp" ClipToBounds="True" Name="myCanvas" Grid.ColumnSpan="3" Grid.RowSpan="2" Background="{Binding BackgroundColor, Converter={StaticResource BackgroundColorConverter}, Source={StaticResource model}}" Margin="5,5,5,5" Loaded="onLoadedCanvas" SizeChanged="onSizeChanged">
                     
                 </Canvas>
-                <StackPanel MouseEnter="MyStack_MouseEnter" MouseLeave="MyStack_MouseLeave" Name="buttonStackPanel" Grid.Column="1" Grid.Row="1" Margin="15"  Orientation="Horizontal">
+
+                <StackPanel  MouseEnter="MyStack_MouseEnter" MouseLeave="MyStack_MouseLeave" Name="coordsStackPanel" Grid.Column="0" Grid.Row="1"  Margin="15" Orientation="Horizontal">
+                    <TextBox Name="coordXTextBox" Text="X: 0.00" IsEnabled="False"/>
+                    <TextBox Name="coordYTextBox" Text="Y: 0.00" IsEnabled="False"/>
+                </StackPanel>
+                
+                <StackPanel MouseEnter="MyStack_MouseEnter" MouseLeave="MyStack_MouseLeave" Name="buttonStackPanel" Grid.Column="2" Grid.Row="1" Margin="15"  Orientation="Horizontal">
                     <Button Name="pointerButton" Click="onDifferentCursorListener">
                         <Image Name="cursorImage" Width="26" Source="resources/cursorPressed.png" />
                     </Button>

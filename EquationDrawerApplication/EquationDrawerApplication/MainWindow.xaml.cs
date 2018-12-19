@@ -127,6 +127,10 @@ namespace EquationDrawerApplication
             drawEquations();
 
         }
+        void onFunctionClosingWindow(object sender, EventArgs args)
+        {
+            functionButton.IsEnabled = true;
+        }
 
         //Draw Methods
         private void drawAxis(bool axis) {
@@ -626,13 +630,20 @@ namespace EquationDrawerApplication
                 drawEquations();
                 myCanvas.Children.Add(getRectangle());
             }
+            else
+            {
+                coordXTextBox.Text ="X: "+transformation.getX(e.GetPosition(myCanvas)).ToString("#.##");
+                coordYTextBox.Text ="Y: "+ transformation.getY(e.GetPosition(myCanvas)).ToString("#.##");
+
+            }
         }
         private void MyCanvas_MouseEnter(object sender, MouseEventArgs e)
         {
             buttonStackPanel.Visibility = Visibility.Visible;
-            if(isRect) this.Cursor = Cursors.Cross;
+            if (isRect) this.Cursor = Cursors.Cross;
             if (isDrag) this.Cursor = Cursors.Hand;
-            if(isPointer) this.Cursor = Cursors.Arrow;
+            if (isPointer) this.Cursor = Cursors.Arrow;
+            coordsStackPanel.Visibility = Visibility.Visible;
 
 
         }
@@ -640,11 +651,13 @@ namespace EquationDrawerApplication
         {
             buttonStackPanel.Visibility = Visibility.Collapsed;
             this.Cursor = Cursors.Arrow;
+            coordsStackPanel.Visibility = Visibility.Collapsed;
 
         }
         private void MyStack_MouseEnter(object sender, MouseEventArgs e)
         {
             buttonStackPanel.Visibility = Visibility.Visible;
+            coordsStackPanel.Visibility = Visibility.Visible;
         }
         private void MyStack_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -698,8 +711,11 @@ namespace EquationDrawerApplication
             personalizeWindow.Owner = this;
             personalizeWindow.Show();
         }
+        
         private void functionsButtonListener(object sender, RoutedEventArgs e){
             FunctionWindow functionWindow = new FunctionWindow();
+            functionWindow.OnClosingWindowEventHandler += onFunctionClosingWindow;
+            functionButton.IsEnabled = false;
             functionWindow.Show();
         }
         private void exportButtonListener(object sender, RoutedEventArgs e){

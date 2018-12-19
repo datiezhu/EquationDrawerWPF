@@ -17,8 +17,11 @@ namespace EquationDrawerApplication
     /// <summary>
     /// Interaction logic for FunctionWindow.xaml
     /// </summary>
+    public delegate void OnClosingWindowEventHandler(object sender, EventArgs args);
+
     public partial class FunctionWindow : Window
     {
+        public event OnClosingWindowEventHandler OnClosingWindowEventHandler;
         //private Model model;
         public FunctionWindow()
         {
@@ -29,5 +32,16 @@ namespace EquationDrawerApplication
             
 
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            onClosingWindowEventHandler(null);
+        }
+
+        protected virtual void onClosingWindowEventHandler(EventArgs args)
+        {
+            if (this.OnClosingWindowEventHandler != null) this.OnClosingWindowEventHandler(this, args);
+        }
+
     }
 }
