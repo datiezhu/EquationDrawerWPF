@@ -24,6 +24,7 @@ namespace EquationDrawerApplication
     public delegate void OnIntervalEventHandler(object sender, EventArgs args);
     public delegate void OnSliderChangedEventHandler(object sender, EventArgs args);
     public delegate void OnSelectedColorEventHandler(object sender, EventArgs args);
+    public delegate void OnClosingPersonalizeWindowEventHandler(object sender, EventArgs args);
     public partial class PersonalizeWindow : Window
     {
 
@@ -33,6 +34,7 @@ namespace EquationDrawerApplication
         public event OnIntervalEventHandler OnIntervalEventHandler;
         public event OnSliderChangedEventHandler OnSliderChangedEventHandler;
         public event OnSelectedColorEventHandler OnSelectedColorEventHandler;
+        public event OnClosingPersonalizeWindowEventHandler OnClosingPersonalizeWindowEventHandler;
         public PersonalizeWindow()
         {
             InitializeComponent();
@@ -41,12 +43,25 @@ namespace EquationDrawerApplication
 
         private void onTableViewSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            Equation equation = ((sender as ListView).SelectedItem as Equation);
+            
+            if ((sender as ListView).SelectedIndex != -1)
+            {
+                textBoxName.IsEnabled = true;
+                colorPickerFunction.IsEnabled = true;
+                sliderFunction.IsEnabled = true;
+            }
+            else
+            {
+                textBoxName.IsEnabled = false;
+                colorPickerFunction.IsEnabled = false;
+                sliderFunction.IsEnabled = false;
+            }
 
 
-
-
-
+        }
+        protected virtual void onClosingPersonalizeWindowEventHandler(EventArgs args)
+        {
+            if (this.OnClosingPersonalizeWindowEventHandler != null) this.OnClosingPersonalizeWindowEventHandler(this, args);
         }
 
         protected virtual void onSelectedColorEventHandler(EventArgs args) {
@@ -80,6 +95,11 @@ namespace EquationDrawerApplication
         private void onIntervalListener(object sender, RoutedEventArgs args)
         {
             onIntervalEventHandler(null);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            onClosingPersonalizeWindowEventHandler(null);
         }
     }
 }

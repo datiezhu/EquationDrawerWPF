@@ -131,6 +131,10 @@ namespace EquationDrawerApplication
         {
             functionButton.IsEnabled = true;
         }
+        void onPersonalizeClosingWindow(object sender, EventArgs args)
+        {
+            personalizeButton.IsEnabled = true;
+        }
 
         //Draw Methods
         private void drawAxis(bool axis) {
@@ -708,6 +712,8 @@ namespace EquationDrawerApplication
             personalizeWindow.OnIntervalEventHandler += onIntervalChanged;
             personalizeWindow.OnSliderChangedEventHandler += onSliderChanged;
             personalizeWindow.OnSelectedColorEventHandler += onSelectedColorChanged;
+            personalizeWindow.OnClosingPersonalizeWindowEventHandler += onPersonalizeClosingWindow;
+            personalizeButton.IsEnabled = false;
             personalizeWindow.Owner = this;
             personalizeWindow.Show();
         }

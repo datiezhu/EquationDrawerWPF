@@ -9,7 +9,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="EquationDrawerApplication.FunctionWindow"
         Closing="Window_Closing"
         mc:Ignorable="d"
-        Title="FunctionWindow" Height="244.709" Width="575.417" Background="#FF252323">
+        Title="FunctionWindow" Height="244.709" Width="575.417" Background="#FF1E1E1E">
 
     <Window.Resources>
         <model:Equation x:Key="Equation" />

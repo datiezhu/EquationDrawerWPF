@@ -7,7 +7,7 @@
         xmlns:converters="clr-namespace:EquationDrawerApplication.ViewModels.Converter"
         xmlns:equations="clr-namespace:EquationDrawerApplication.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="606.466" Width="1078.899" Background="#FF181818" >
+        Title="MainWindow" Height="606.466" Width="1185.399" Background="#FF1E1E1E" >
 
     <Window.Resources>
         <converters:BackgroundColorConverter x:Key="BackgroundColorConverter"/>
@@ -17,7 +17,7 @@
     <DockPanel >
 
         <StackPanel DockPanel.Dock="Top">
-            <ToolBar ToolBarTray.IsLocked="True" DockPanel.Dock="Top" HorizontalAlignment="Center" Background="#FF181818" Loaded="ToolBar_Loaded">
+            <ToolBar ToolBarTray.IsLocked="True" DockPanel.Dock="Top" HorizontalAlignment="Center" Background="#FF1E1E1E" Loaded="ToolBar_Loaded">
                
                 <Button Name="zoomOutButton" Click="zoomOutButtonListener">
                     <StackPanel Orientation="Vertical">
