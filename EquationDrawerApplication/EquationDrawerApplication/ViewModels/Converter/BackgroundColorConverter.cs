@@ -15,7 +15,6 @@ namespace EquationDrawerApplication.ViewModels.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Color color = (Color)value;
-            Debug.WriteLine("Color: " + color.ToString() + "   Param: " + parameter);
             return new SolidColorBrush(color);
 
             

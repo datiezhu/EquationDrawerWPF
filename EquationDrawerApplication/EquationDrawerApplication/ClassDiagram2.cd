@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EquationDrawerApplication.Transformation">
+    <Position X="0.5" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ADwAAAAAAAAAgAEAABAAAAAAAAAAAAAAAAAgA3AAAAA=</HashCode>
+      <FileName>Helpers\Transformation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EquationDrawerApplication.MainWindow">
+    <Position X="3.5" Y="0.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>CgoBAARAUAEgCCAoACgQUgACAAigABIAYIAAjIFIETE=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EquationDrawerApplication.PersonalizeWindow" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="3.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>MAAAABAQECAACAAAABBRAgAAAgAAAAIAAAABACAAAgA=</HashCode>
+      <FileName>PersonalizeWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EquationDrawerApplication.FunctionWindow" Collapsed="true">
+    <Position X="7.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAABAAAAAAAAAAAAAAgCAAAAAAAAA=</HashCode>
+      <FileName>FunctionWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EquationDrawerApplication.ViewModels.ViewModelBase" Collapsed="true">
+    <Position X="13.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAIAAEAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ViewModelBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

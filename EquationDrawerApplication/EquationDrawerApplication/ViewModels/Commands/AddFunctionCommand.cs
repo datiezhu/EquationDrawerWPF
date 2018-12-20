@@ -18,7 +18,6 @@ namespace EquationDrawerApplication.ViewModels.Commands
             this.ViewModel = viewModel;
         }
 
-        //public event EventHandler CanExecuteChanged;
 
         public event EventHandler CanExecuteChanged
         {

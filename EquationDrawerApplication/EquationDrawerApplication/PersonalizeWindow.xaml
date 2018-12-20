@@ -127,12 +127,12 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Label  Content="Dominio y Recorrido" HorizontalAlignment="Center" Grid.ColumnSpan="3" Margin="0,10,0,0"/>
-            <TextBox Grid.Row="1" Width="100" Margin="5" SelectionChanged="onIntervalListener" Text="{Binding MinX, Source={StaticResource model}}"/>
+            <TextBox Grid.Row="1" Width="100" Margin="5" SelectionChanged="onIntervalListener" Text="{Binding MinX, Source={StaticResource model}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="&lt; x &lt;" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Margin="5"/>
-            <TextBox Grid.Row="1" Grid.Column="2" Width="100" SelectionChanged="onIntervalListener" Margin="5" Text="{Binding MaxX, Source={StaticResource model}}"/>
-            <TextBox Grid.Row="2" Width="100" Margin="5" SelectionChanged="onIntervalListener" Text="{Binding MinY, Source={StaticResource model}}"/>
+            <TextBox Grid.Row="1" Grid.Column="2" Width="100" SelectionChanged="onIntervalListener" Margin="5" Text="{Binding MaxX, Source={StaticResource model}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="2" Width="100" Margin="5" SelectionChanged="onIntervalListener" Text="{Binding MinY, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True,Mode=TwoWay ,Source={StaticResource model},UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="&lt; y &lt;" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Margin="5"/>
-            <TextBox Grid.Row="2" Grid.Column="2" Width="100" SelectionChanged="onIntervalListener" Margin="5" Text="{Binding MaxY, Source={StaticResource model}}"/>
+            <TextBox Grid.Row="2" Grid.Column="2" Width="100" SelectionChanged="onIntervalListener" Margin="5" Text="{Binding MaxY, Source={StaticResource model}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
         </Grid>
 

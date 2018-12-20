@@ -99,19 +99,19 @@ namespace EquationDrawerApplication.Models
             minX = minY = -20;
             maxX = maxY = 20;    
         }
-        public void zoomIn() {
-            minX /= 2;
-            minY /= 2;
-            maxX /= 2;
-            maxY /= 2;
+        public void zoomIn(float value) {
+            minX /= value;
+            minY /= value;
+            maxX /= value;
+            maxY /= value;
         }
 
         public void resize(Point start, Point end)
         {
-            maxX = Math.Max(start.X , end.X);
-            maxY = Math.Max(start.Y , end.Y);
-            minX=Math.Min(start.X, end.X);
-            minY=Math.Min(start.Y, end.Y);
+                maxX = Math.Max(start.X, end.X);
+                maxY = Math.Max(start.Y, end.Y);
+                minX = Math.Min(start.X, end.X);
+                minY = Math.Min(start.Y, end.Y);
         }
         public void drag(Point start, Point end) {
             Debug.WriteLine("Xmin: " + minX + "Xmax: " + maxX + "Ymin: " + minY + "Ymax: " + maxY);
@@ -139,12 +139,12 @@ namespace EquationDrawerApplication.Models
             Debug.WriteLine("Xmin: " + minX + "Xmax: " + maxX + "Ymin: " + minY + "Ymax: " + maxY);
 
         }
-        public void zoomOut()
+        public void zoomOut(float value)
         {
-            minX *= 2;
-            minY *= 2;
-            maxX *= 2;
-            maxY *= 2;
+            minX *= value;
+            minY *= value;
+            maxX *= value;
+            maxY *= value;
         }
         private void OnPropertyChanged(string propertyName)
         {

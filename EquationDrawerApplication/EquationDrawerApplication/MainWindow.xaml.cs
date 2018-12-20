@@ -24,9 +24,7 @@ using Expression = org.mariuszgromada.math.mxparser.Expression;
 
 namespace EquationDrawerApplication
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+  
     public partial class MainWindow : Window
     {
         //Attributes
@@ -35,37 +33,25 @@ namespace EquationDrawerApplication
         private Data model;
         private ViewModelBase equations;
         private bool isPointer=true, isDrag, isRect; 
-        //private Model model;
 
-        //Delegates
         
         public MainWindow()
         {
-            //viewModel = new ViewModelBase();
             InitializeComponent();
             model = Application.Current.Resources["model"] as Data;
             equations = Application.Current.Resources["ViewModelBase"] as ViewModelBase;
             equations.CollectionChanged += this.OnCollectionChanged;
-            //DataContext = viewModel;
-            //  model = new Model();
         }
 
 
         void OnCollectionChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("Holaaaa");
             canvas.Children.Clear();
-
             drawChart();
             drawEquations();
         }
 
 
-
-
-        void eventHandler(object sender, EventArgs args) {
-            
-        }
 
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)
         {
@@ -588,7 +574,6 @@ namespace EquationDrawerApplication
             isLeftMouseButtonDownOnWindow = false;
             dragging = false;
             this.Cursor = Cursors.Arrow;
-            //Debug.WriteLine("dsfdsfdsf: "+isRect);
             if (isRect)
             {
                
@@ -602,15 +587,19 @@ namespace EquationDrawerApplication
                 endScreen.X = transformation.getX(endMouseDownPoint.X);
                 endScreen.Y = transformation.getY(endMouseDownPoint.Y);
 
-                /*Debug.WriteLine("START PANT--- X: " + origMouseDownPoint.X + " , Y: " + origMouseDownPoint.Y);
-                Debug.WriteLine("END PANT--- X: " + endMouseDownPoint.X + " , Y: " + endMouseDownPoint.Y);
-                Debug.WriteLine("START--- X: " + startScreen.X + " , Y: " + startScreen.Y);
-                Debug.WriteLine("END--- X: " + endScreen.X + " , Y: " + endScreen.Y);*/
-
-                model.resize(startScreen, endScreen);
-                canvas.Children.Clear();
-                drawChart();
-                drawEquations();
+                if ((Math.Abs(startScreen.X-endScreen.X)> Math.Abs(transformation.maxX) *0.1) &&
+                    (Math.Abs(startScreen.Y - endScreen.Y) > Math.Abs(transformation.maxY) * 0.1)) {
+                    model.resize(startScreen, endScreen);
+                    canvas.Children.Clear();
+                    drawChart();
+                    drawEquations();
+                }
+                else
+                {
+                    if (canvas != null) canvas.Children.Clear();
+                    drawChart();
+                    drawEquations();
+                }
             }
 
         }
@@ -618,7 +607,6 @@ namespace EquationDrawerApplication
         {
             if (isLeftMouseButtonDownOnWindow && isDrag){
                 Point current = e.GetPosition(myCanvas);
-                //Debug.WriteLine("Draggin\n");
 
                 model.drag(origMouseDownPoint, current);
                 canvas.Children.Clear();
@@ -628,7 +616,6 @@ namespace EquationDrawerApplication
             }else if(isRect && dragging)
             {
                 endMouseDownPoint = e.GetPosition(myCanvas);
-                //Debug.WriteLine("Draggin\n");
                 if (canvas != null) canvas.Children.Clear();
                 drawChart();
                 drawEquations();
@@ -667,11 +654,25 @@ namespace EquationDrawerApplication
         {
             //buttonStackPanel.Visibility = Visibility.Hidden;
         }
+        private void MyCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if(e.Delta > 0) //Zoom in
+            {
+                model.zoomIn(1.1F);
+            }
+            else //Zoom put
+            {
+                model.zoomOut(1.1F);
 
+            }
 
-
-        private void onTouchEllipseEvent(object sender, RoutedEventArgs e) {
+            canvas.Children.Clear();
+            drawChart();
+            drawEquations();
         }
+
+
+
         private void onLoadedCanvas(object sender, RoutedEventArgs e) {
             this.drawChart(); }
         private void onSizeChanged(object sender, RoutedEventArgs e) {
@@ -686,13 +687,13 @@ namespace EquationDrawerApplication
         }
         
         private void zoomInButtonListener(object sender, RoutedEventArgs e) {
-            model.zoomIn();
+            model.zoomIn(2);
             canvas.Children.Clear();
             drawChart();
             drawEquations();
         }
         private void zoomOutButtonListener(object sender, RoutedEventArgs e){
-            model.zoomOut();
+            model.zoomOut(2);
             canvas.Children.Clear();
             drawChart();
             drawEquations();
@@ -704,7 +705,10 @@ namespace EquationDrawerApplication
             drawEquations();
         }
 
-        
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
 
         private void personalizeInButtonListener(object sender, RoutedEventArgs e){
             PersonalizeWindow personalizeWindow = new PersonalizeWindow();
@@ -722,6 +726,7 @@ namespace EquationDrawerApplication
             FunctionWindow functionWindow = new FunctionWindow();
             functionWindow.OnClosingWindowEventHandler += onFunctionClosingWindow;
             functionButton.IsEnabled = false;
+            functionWindow.Owner = this;
             functionWindow.Show();
         }
         private void exportButtonListener(object sender, RoutedEventArgs e){
@@ -746,9 +751,7 @@ namespace EquationDrawerApplication
                 Rect bounds = VisualTreeHelper.GetDescendantBounds(myCanvas);
                 double dpi = 96d;
 
-
                 RenderTargetBitmap rtb = new RenderTargetBitmap((int)bounds.Width, (int)bounds.Height, dpi, dpi, System.Windows.Media.PixelFormats.Default);
-
 
                 DrawingVisual dv = new DrawingVisual();
                 using (DrawingContext dc = dv.RenderOpen())
@@ -758,10 +761,9 @@ namespace EquationDrawerApplication
                 }
 
                 rtb.Render(dv);
-
+            
                 BitmapEncoder pngEncoder = new PngBitmapEncoder();
                 pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
-
                 try
                 {
                     System.IO.MemoryStream ms = new System.IO.MemoryStream();
@@ -775,18 +777,10 @@ namespace EquationDrawerApplication
                 {
                     System.Windows.MessageBox.Show(err.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-                //SaveCanvasToFile(this, canvas, 96, filename);
             }
 
         }
-
         
-
-        
-
-       
-
         private void onDifferentCursorListener(object sender, RoutedEventArgs e)
         {
             if(isPointer)cursorImage.Source = new BitmapImage((new Uri("resources/cursor.png", UriKind.Relative)));
@@ -816,9 +810,3 @@ namespace EquationDrawerApplication
         }
     }
 }
-
-/*
- * 
- * 
- * WindowClosed----- Application.Current.Shutdowm
- * */

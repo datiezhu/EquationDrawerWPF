@@ -59,6 +59,8 @@ namespace EquationDrawerApplication
 
 
         }
+
+
         protected virtual void onClosingPersonalizeWindowEventHandler(EventArgs args)
         {
             if (this.OnClosingPersonalizeWindowEventHandler != null) this.OnClosingPersonalizeWindowEventHandler(this, args);

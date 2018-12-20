@@ -40,16 +40,10 @@ E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\Equation
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\Themes\MetroDark\Styles.Shared.baml
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\Themes\MetroDark\Styles.WPF.baml
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\Themes\MetroDark\Theme.Colors.baml
-E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\FunctionWindow.g.cs
-E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\MainWindow.g.cs
-E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\PersonalizeWindow.g.cs
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\App.g.cs
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\EquationDrawerApplication_MarkupCompile.cache
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\EquationDrawerApplication_MarkupCompile.lref
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\App.baml
-E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\FunctionWindow.baml
-E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\MainWindow.baml
-E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\PersonalizeWindow.baml
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\EquationDrawerApplication.g.resources
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\EquationDrawerApplication.Properties.Resources.resources
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\EquationDrawerApplication.csproj.GenerateResource.cache
@@ -59,3 +53,9 @@ E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\Equation
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\EquationDrawerApplication.pdb
 E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\xamo\Documents\Github Projects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\FunctionWindow.g.cs
+E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\MainWindow.g.cs
+E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\PersonalizeWindow.g.cs
+E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\FunctionWindow.baml
+E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\MainWindow.baml
+E:\Documents\GithubProjects\EcuationDrawerWPF\EquationDrawerApplication\EquationDrawerApplication\obj\Debug\PersonalizeWindow.baml

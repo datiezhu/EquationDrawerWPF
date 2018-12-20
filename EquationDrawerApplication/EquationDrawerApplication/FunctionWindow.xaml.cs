@@ -22,7 +22,6 @@ namespace EquationDrawerApplication
     public partial class FunctionWindow : Window
     {
         public event OnClosingWindowEventHandler OnClosingWindowEventHandler;
-        //private Model model;
         public FunctionWindow()
         {
             InitializeComponent();
