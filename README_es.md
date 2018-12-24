@@ -41,8 +41,11 @@ Las dos opciones más importantes del menú que se muestra son la de “funcione
 
 En la parte izquierda vemos las funciones que se están representando y si introducimos el ratón dentro del canvas podremos ver las coordenadas, así como la herramienta seleccionada:
 ![Sample image](/readmeAssets/functionsExample.png?raw=true "Main look")
+
 El icono seleccionado sirve para arrastrar y moverse dentro del canvas.
+
 El icono a la derecha de este sirve para hacer zoom en una región especifica:
+
 ![Sample image](/readmeAssets/rectZoom.png?raw=true "Zoom with rectangle")
 
 ### Funciones
@@ -89,6 +92,7 @@ Nuestro diagrama de clases consta de varios paquetes:
 	* Converter: Paquete para los convertidores de la aplicación.
 
 ![Sample image](/readmeAssets/class_diagram_level1.png?raw=true "Class Diagram level 1")
+
 Debido al gran tamaño de los módulos los veremos por separado desde más abstracto a más concreto, es decir, primero veremos las clases que contienen estos paquetes y las relaciones entre ellas y después veremos los atributos, métodos, eventos… de cada clase :
 
 ![Sample image](/readmeAssets/class_diagram_level1.png?raw=true "Class Diagram level 2")
@@ -98,9 +102,12 @@ Debido al gran tamaño de los módulos los veremos por separado desde más abstr
 Este paquete contiene a su vez los paquetes Converter y Commands los cuales detallaremos mas adelante. Además de estos paquetes también tiene la clase ViewModelBase.
 
 Esta clase sirve como enlace entre los objetos visuales y los datos del modelo.
+
 ![Sample image](/readmeAssets/viewModelBase.png?raw=true "View model diagram")
 ### Paquete Converter
+
 En este paquete nos encontramos con la clase _BackgroundColorConverter_ la cual es utilizada para convertir el color que obtenemos del colorPicker a un color que le podamos asignar al color de fondo del canvas.
+
 ![Sample image](/readmeAssets/backgroundColorConverter.png?raw=true "Background Color Converter diagram")
 
 ### Paquete Commands
@@ -122,6 +129,7 @@ En este paquete nos encontramos 2 clases las cuales implementan la interfaz _ICo
 Nos encontramos la clase Transformation la cual es utilizada para la representación de puntos en la pantalla. Dado un punto en coordenadas de pantalla nos lo convierte a puntos de nuestro canvas en concreto y, al contrario.
 
 Esta clase es usada por la ventana principal para dibujar las funciones, realizar el zoom, el scrolling y todo lo que conlleve calcular puntos.
+
 ![Sample image](/readmeAssets/transformation.png?raw=true "Transformation diagram")
 
 ### Paquete principal
