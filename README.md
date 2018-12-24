@@ -13,7 +13,6 @@ Personalmente _C#_ me ha parecido un buen lenguaje, ya que es bastante parecido 
 
 ## Objetivos de la práctica
 El objetivo principal de esta práctica es construir una aplicación que permita la representación gráfica de funciones.
-<![endif]-->
 
 # Manual de Usuario
 
@@ -29,7 +28,7 @@ La funcionalidad mínima que posee la aplicación es representar los siguientes 
 
 Ya que se ha introducido un analizador de ecuaciones no es necesario escribir parámetros, tan solo basta con introducir la función a representar.
 La pantalla principal es la siguiente:
-![Sample image](parking2.png?raw=true "Main look")
+![Sample image](/readmeAssets/mainWindow.png?raw=true "Main look")
 
 Las dos opciones más importantes del menú que se muestra son la de “funciones” y “personalizar” aunque procederemos a explicar todas las opciones:
 
@@ -41,14 +40,14 @@ Las dos opciones más importantes del menú que se muestra son la de “funcione
 * Exportar imagen: Permite exportar el “lienzo” donde se representan las funciones a varios ficheros de imagen.
 
 En la parte izquierda vemos las funciones que se están representando y si introducimos el ratón dentro del canvas podremos ver las coordenadas, así como la herramienta seleccionada:
-![Sample image](parking2.png?raw=true "Main look")
+![Sample image](/readmeAssets/functionsExample.png?raw=true "Main look")
 El icono seleccionado sirve para arrastrar y moverse dentro del canvas.
 El icono a la derecha de este sirve para hacer zoom en una región especifica:
-![Sample image](parking2.png?raw=true "Zoom with rectangle")
+![Sample image](/readmeAssets/rectZoom.png?raw=true "Zoom with rectangle")
 
 ### Funciones
 En esta ventana se podrá añadir cualquier función que desee el usuario. Primero se deberá seleccionar el nombre de la gráfica, el color y por último la función a representar. El botón añadir solo se activará cuando la función tenga un nombre y cuando la función escrita por el usuario pueda representarse.
-![Sample image](parking2.png?raw=true "Function Window")
+![Sample image](/readmeAssets/functionWindow.png?raw=true "Function Window")
 ### Personalizar
 En esta ventana podremos realizar varias funciones:
 
@@ -65,7 +64,7 @@ En esta ventana podremos realizar varias funciones:
 
 * Modificar Dominio y recorrido de representación
 
-![Sample image](parking2.png?raw=true "Personalize Window")
+![Sample image](/readmeAssets/personalizeWindow.png?raw=true "Personalize Window")
 
 ### Exportar imagen
 En esta pestaña podremos exportar la imagen en varios formatos:
@@ -75,7 +74,7 @@ En esta pestaña podremos exportar la imagen en varios formatos:
 * JPG
 * BMP
 
-![Sample image](parking2.png?raw=true "Save panel")
+![Sample image](/readmeAssets/savePanel.png?raw=true "Save panel")
 # Manual del programador
 
 ## Diagrama de clases
@@ -89,20 +88,20 @@ Nuestro diagrama de clases consta de varios paquetes:
 	* Commands: Paquete para los comandos de la aplicación.
 	* Converter: Paquete para los convertidores de la aplicación.
 
-![Sample image](parking2.png?raw=true "Class Diagram level 1")
+![Sample image](/readmeAssets/class_diagram_level1.png?raw=true "Class Diagram level 1")
 Debido al gran tamaño de los módulos los veremos por separado desde más abstracto a más concreto, es decir, primero veremos las clases que contienen estos paquetes y las relaciones entre ellas y después veremos los atributos, métodos, eventos… de cada clase :
 
-![Sample image](parking2.png?raw=true "Class Diagram level 2")
+![Sample image](/readmeAssets/class_diagram_level1.png?raw=true "Class Diagram level 2")
 ## Glosario de clases
 
 ### Paquete ViewModel
 Este paquete contiene a su vez los paquetes Converter y Commands los cuales detallaremos mas adelante. Además de estos paquetes también tiene la clase ViewModelBase.
 
 Esta clase sirve como enlace entre los objetos visuales y los datos del modelo.
-![Sample image](parking2.png?raw=true "View model diagram")
+![Sample image](/readmeAssets/viewModelBase.png?raw=true "View model diagram")
 ### Paquete Converter
 En este paquete nos encontramos con la clase _BackgroundColorConverter_ la cual es utilizada para convertir el color que obtenemos del colorPicker a un color que le podamos asignar al color de fondo del canvas.
-![Sample image](parking2.png?raw=true "Background Color Converter diagram")
+![Sample image](/readmeAssets/backgroundColorConverter.png?raw=true "Background Color Converter diagram")
 
 ### Paquete Commands
 
@@ -116,21 +115,20 @@ En este paquete nos encontramos 2 clases las cuales implementan la interfaz _ICo
 
 * DeleteFunctionCommand: Este comando es utilizado para poder eliminar una ecuación cuando se llama a este comando.
 
-![Sample image](parking2.png?raw=true "Commands diagram")
+![Sample image](/readmeAssets/commands.png?raw=true "Commands diagram")
 
 ### Paquete Helpers
 
 Nos encontramos la clase Transformation la cual es utilizada para la representación de puntos en la pantalla. Dado un punto en coordenadas de pantalla nos lo convierte a puntos de nuestro canvas en concreto y, al contrario.
 
 Esta clase es usada por la ventana principal para dibujar las funciones, realizar el zoom, el scrolling y todo lo que conlleve calcular puntos.
-![Sample image](parking2.png?raw=true "Transformation diagram")
+![Sample image](/readmeAssets/transformation.png?raw=true "Transformation diagram")
 
 ### Paquete principal
 
 En el paquete principal donde tenemos el resto de paquete también tenemos las 3 ventanas mencionadas anteriormente:
-![Sample image](parking2.png?raw=true "Windows diagram")
+![Sample image](/readmeAssets/windows.png?raw=true "Windows diagram")
 
-<![endif]-->
 
 ## Dificultades pasadas
 
@@ -138,7 +136,7 @@ En el paquete principal donde tenemos el resto de paquete también tenemos las 3
 
 	* Debido a la poca información dada acerca de este potente patrón tuve que ver tutoriales de como funcionaba este patrón para poder implementarlo correctamente.
 
-2. <![endif]>Exportar la imagen
+2. Exportar la imagen
 
 	* Me costó bastante trabajo dar con un código que permitiera exportar un canvas a un fichero de imagen ya que lo más próximo que encontré era una imagen de toda la ventana en blanco salvo el canvas.
 
@@ -167,7 +165,6 @@ Dado que se trata de un trabajo con una funcionalidad mínima vamos a destacar a
 6. Exportar a varios tipos de ficheros
 7. Interfaz limpia, profesional y sencilla
 
-<![endif]-->
 
 # Referencias
 * Tema Metro oscuro:
